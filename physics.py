@@ -9,9 +9,13 @@ from vector import *
 # universal gravitational constant 
 G = 6.673e-11 # unit  [N m2 kg-2]
 # Unit charge
-e = 8.85e-32 # unit
+e = 8.85e-32 # unit [C]
 # earth mass
-MassEearth = 6e24  # kg
+MassEearth = 6e24  # unit [kg]
+# constant infinite mass
+cmass = 10e20 # unit [kg]
+# coficient of restitution
+ec = 0.15
 '''
 ==========================================
     physics class
@@ -73,6 +77,9 @@ class physics(object):
         self.force.add(force)
         # updating the acc
         self.updateAcc()
+    def applyThrust(self,mag,direction):
+        direction.reverse()
+        self.applyForce2(mag,direction)
     def realTimeForces(self,earthMass,dist):
         gravitation = (G * self.mass * earthMass)/ (dist**2)
         gForce = vector(0,-1,0)
@@ -154,6 +161,10 @@ class physics(object):
         # right
         if self.pos.x >= window[0] :
             self.pos.x = window[0]
+            # formula used m1*v1 = m2*v2
+            # since window is static unit so the mass of the wall is assumed 
+            # much large the any other object near infinity
+            
             temp = vector((0,0,0),(0,0,0))
             temp.copy(self.acc)
             temp.mult(self.mass)

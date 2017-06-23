@@ -14,6 +14,9 @@ class Ak47(physics):
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -32,6 +35,9 @@ class Women(physics):
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -47,6 +53,9 @@ class Man(physics):
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -68,6 +77,9 @@ class Arrow(physics):
         self.edges = [0,1],[1,2],[2,3],[3,0],
                      
         self.faces = [0,1,2,3]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -83,6 +95,9 @@ class Pointer(physics):
         self.vertex = [0,0,0],[1,0,0],[0,1,0],[0,0,1]
         self.edges = [0,1],[0,2],[0,3]
         self.faces = []
+        self.vertexColor = [100,00,00]
+        self.edgeColor = [[200,0,0],[0,200,0],[0,0,200]]
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -92,12 +107,56 @@ class Pointer(physics):
                 self.vertex[i][0] += pos[0]
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
+# mark
+class Mark(physics):
+    def __init__(self,pos):
+        super(Mark,self).__init__()
+        self.vertex = [0,0,0],[1,0,0],[0,1,0],[0,0,1]
+        self.edges = [0,1],[0,2],[0,3]
+        self.faces = []
+        self.vertexColor = [100,00,00]
+        self.edgeColor = [[200,0,0],[0,200,0],[0,0,200]]
+        self.faceColor = []
+        self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
+        self.centerOfBody = vertex(0,0,0)
+        self.centerOfGravity = vertex(0,0,0)
+        # translating the object from origin to given position
+        if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
+            for i in range(0,len(self.vertex)):
+                self.vertex[i][0] += pos[0]
+                self.vertex[i][1] += pos[1]
+                self.vertex[i][2] += pos[2]
+
+# pointer 3d is pointer in 3d world used as current active point for all the oprations
+
+class Pointer3d(physics):
+    def __init__(self,pos):
+        super(Pointer3d,self).__init__()
+        self.vertex = [[0,0,0]]
+        self.edges = []
+        self.faces = []
+        self.vertexColor = [[50,200,00]]
+        self.edgeColor = []
+        self.faceColor = []
+        self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
+        self.centerOfBody = vertex(0,0,0)
+        self.centerOfGravity = vertex(0,0,0)
+        # translating the object from origin to given position
+        if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
+            for i in range(0,len(self.vertex)):
+                self.vertex[i][0] += pos[0]
+                self.vertex[i][1] += pos[1]
+                self.vertex[i][2] += pos[2]
+
 class Teapot(physics):
     def __init__(self,pos):
         super(Teapot,self).__init__()
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -114,6 +173,9 @@ class Donought(physics):
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -123,12 +185,16 @@ class Donought(physics):
                 self.vertex[i][0] += pos[0]
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
+
 class Sphere(physics):
     def __init__(self,pos):
         super(Sphere,self).__init__()
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -138,12 +204,16 @@ class Sphere(physics):
                 self.vertex[i][0] += pos[0]
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
+
 class Plane(physics):
     def __init__(self,pos):
         super(Plane,self).__init__()
         self.vertex = [10,0,10],[10,0,-10],[-10,0,-10],[-10,0,10]
         self.edges = [0,1],[1,2],[2,3],[3,0]
         self.faces = [0,1,2,3]
+        self.vertexColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.edgeColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.faceColor = [[200,200,200]]
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -153,12 +223,16 @@ class Plane(physics):
                 self.vertex[i][0] += pos[0]
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
+
 class Cylinder(physics):
     def __init__(self,pos):
         super(Cylinder,self).__init__()
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -168,12 +242,16 @@ class Cylinder(physics):
                 self.vertex[i][0] += pos[0]
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
+
 class Cone(physics):
     def __init__(self,pos):
         super(Cone,self).__init__()
         self.vertex = [],[]
         self.edges = [],[]
         self.faces = [],[]
+        self.vertexColor = []
+        self.edgeColor = []
+        self.faceColor = []
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
@@ -183,12 +261,16 @@ class Cone(physics):
                 self.vertex[i][0] += pos[0]
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
+
 class Cube(physics):
     def __init__(self,pos):
         super(Cube,self).__init__()
         self.vertex = [1.000000 ,-1.000000, -1.000000],[ 1.000000, -1.000000, 1.000000],[ -1.000000 ,-1.000000 ,1.000000],[ -1.000000, -1.000000 ,-1.000000],[ 1.000000, 1.000000, -0.999999],[ 0.999999 ,1.000000, 1.000001],[ -1.000000, 1.000000 ,1.000000],[ -1.000000, 1.000000, -1.000000]
         self.edges = [0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]
         self.faces = [0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[0,3,7,4],[1,2,6,5]
+        self.vertexColor = [[253,170,0],[253,170,0],[253,170,0],[253,170,0],[253,170,0],[253,170,0],[253,170,0],[253,170,0]]
+        self.edgeColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.faceColor = [[200,200,200],[200,200,200],[200,200,200],[200,200,200],[200,200,200],[200,200,200]]
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(pos[0],pos[1],pos[2])
         self.centerOfGravity = vertex(pos[0],pos[1],pos[2])

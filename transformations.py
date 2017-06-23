@@ -1,4 +1,4 @@
-
+import math
 
 
 def translate3d(_object_,pos):
@@ -28,7 +28,7 @@ def translate3d_t(_object_,pos):
                 _object_.vertex[i][2] += dz
                 
 def rotate3d(_object_,axis,dtheta,radius = 0):
-        dx,dy,dz  = _object.pos.get()
+        dx,dy,dz  = _object_.pos.get()
         translate3d_t(_object_,(-dx,-dy,-dz))
         c,s = math.cos(dtheta),math.sin(dtheta)
         if axis == 'x':
@@ -48,9 +48,13 @@ def rotate3d(_object_,axis,dtheta,radius = 0):
                 _object_.vertex[i][1] = -temp*s + _object_.vertex[i][1]*c
         # translating the object to the its location
         translate3d_t(_object_,(dx,dy,dz))
+        
 def scale3d(_object_,scale):
+        dx,dy,dz  = _object_.pos.get()
+        translate3d_t(_object_,(-dx,-dy,-dz))
         sx,sy,sz = scale
         for i in range(0,len(_object_.vertex)):
             _object_.vertex[i][0] += _object_.vertex[i][0]*sx
             _object_.vertex[i][1] += _object_.vertex[i][1]*sy
             _object_.vertex[i][2] += _object_.vertex[i][2]*sz 
+        translate3d_t(_object_,(dx,dy,dz))

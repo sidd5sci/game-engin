@@ -101,6 +101,8 @@ class vector(object):
             self.y = -self.y
         if axis == "z":
             self.z = -self.z
+    def reverse(self):
+        self.x,self.y,self.z = -self.x,-self.y,-self.z
     def get(self):
         return self.x,self.y,self.z
 
