@@ -30,7 +30,7 @@ class vector(object):
         self.beta = 0.0
         self.gama = 0.0
         self.magCal()
-    def set(self,pos):
+    def set_(self,pos):
         x,y,z = pos
         self.x = x
         self.y = y
@@ -82,6 +82,36 @@ class vector(object):
         self.y /= self.mag
         self.z /= self.mag
         self.magCal()
+    def isAlong(self,vect):
+        # returns True if both the vectors are along same line
+        x,y,z = self.x,self.y,self.z
+        x1,y1,z1 = vect.x,vect.y,vect.z
+        x *= x1; y *= y1; z *= z1
+        if x != 0:
+            return True
+        elif y != 0:
+            return True
+        elif z != 0:
+            return True
+        else:
+            return False
+    def isPerp(self,vect):
+        # returns True if both the vectors are perpendicular to each other
+        x,y,z = self.x,self.y,self.z
+        x1,y1,z1 = vect.x,vect.y,vect.z
+
+        x *= x1; y *= y1; z *= z1
+
+        if x == 0:
+            if y != 0:
+                if z != 0:
+                    return True
+        else:
+            return False
+    def getAngle(self,vect):
+        # this returns the angle between the two vectors
+        angle  = math.acos(self.multS(vect)/(self.magCal()*vect.magCal()))
+        return angle
     def isUnit(self):
         self.magCal()
         if self.mag == 1:
@@ -106,6 +136,31 @@ class vector(object):
     def get(self):
         return self.x,self.y,self.z
 
+def makeVector(mag,_dir_):
+    v = vector((0,0,0),(0,0,0))
+    v.x,v.y,v.z = _dir_.x,_dir_.y,_dir_.z
+    v.normalized()
+    v.mult(mag)
+    v.magCal()
+    return v
+def getAngle(vctr1,vctr2):
+        # this returns the angle between the two vectors
+        m = vctr1.magCal()*vctr2.magCal()
+        angle  = math.acos(dot(vctr1,vctr2)/(m))
+        return angle
+def dot(vctr,vctr1):
+        x,y,z = vctr.x,vctr.y,vctr.z
+        x1,y1,z1 = vctr1.x,vctr1.y,vctr1.z
+        x *= x1; y *= y1; z *= z1
+        result = x+y+z
+        return result
+def cross(vctr,vctr1):
+        vctr.x *= (vctr.y*vctr1.z - vctr.z*vctr1.y)
+        vctr.z *= (vctr.x*vctr1.z - vctr.z*vctr1.x)
+        vctr.z *= (vctr.x*vctr1.z - vctr.y*vctr1.x)
+        vctr.magCal()
+        return vctr
+
 # =================================
 #   global variables
 # =================================
@@ -115,3 +170,6 @@ UNIT_VERTEX = vertex(1,1,1)
 # zero vertex
 ZERO_VECTOR = vector((0,0,0),(0,0,0))
 UNIT_VECTOR = vector((0,0,0),(1,1,1))
+
+if __name__ == '__main__':
+    pass

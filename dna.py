@@ -1,5 +1,11 @@
-
-  
+############################################################################
+###
+###                        DNA handler 
+###       ------------------------------------------
+###
+###
+###
+############################################################################  
 
 
 
@@ -11,6 +17,9 @@
 ======================================
 
 """
+##def geneLib():
+##    lib = {'gene':[1,0,1,1,0,1,0,1]}
+
 class Gene:
 
    def __init__(self,_id_,name,state,comment,code):
@@ -18,7 +27,10 @@ class Gene:
        self.name = name  # name of the gene
        self.state = state # active/inactive
        self.comment = comment  # description of gene
-       self.code = list(code) # gene 8 binary bits  
+       self.code = str(d_to_b(code)) # gene 8 binary bits
+
+       for i in range(0,8-len(self.code)):
+          self.code = '0'+self.code
    def get(self):
        print   '\n+===============================================================+'
        print   '| ID        :  ',self._id_
@@ -38,18 +50,21 @@ class DNA:
           # read the dna
           lastGene =  self.dna[len(self.dna)-1]
           _id_ = lastGene._id_ + 1
-       if len(code) <= 8:
+       if len(str(d_to_b(code))) <= 8:
           gene = Gene(_id_,name,state,comment,code)
           self.dna.append(gene)
        else:
-         print 'gene code sequence must be 8 bits only'
+         print 'gene code sequence must be 8 bits only (0 to 255)'
+##       gene = Gene(_id_,name,state,comment,code)
+##       self.dna.append(gene)
    def removeGene(self,_id_):
        for gene in self.dna:
           if gene._id_ == _id_:
              self.dna.remove(gene)
              break
    def crossOver(self,dna2,crossOverRate):
-       pass
+       for i in range(0,8):
+          pass
    def readDna(self):
        for gene in self.dna:
           gene.get()
@@ -70,15 +85,19 @@ class DNA:
           else:state = False
           
           comment = ''
-          code = randomBinaryCodes()
+          code = str(d_to_b(random.uniform(0,255)))
           name = readGeneLib('names')
           self.addGene(name,state,comment,code)
    def mutateDna(self,mutationRate):
        # mutation rate lise between 0 and 1
        pass
- 
+def b_to_d(b):# binary to decimal
+    return int(b,2)
+def d_to_b(d):# decimal to binary
+    return int(bin(d)[2:])
+   
 if __name__ == '__main__':
    d1 = DNA()
-   d1.addGene('legs',True,'this gene controlls the number of legs of the creature','10101011')
-   d1.addGene('hands',True,'this gene controlls the number of legs of the creature','10101011')
+   d1.addGene('legs',True,'this gene controlls the number of legs of the creature',6)
+   d1.addGene('hands',True,'this gene controlls the number of legs of the creature',235)
    d1.readDna()

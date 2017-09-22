@@ -223,6 +223,25 @@ class Plane(physics):
                 self.vertex[i][0] += pos[0]
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
+class Circle(physics):
+    def __init__(self,pos):
+        super(Circle,self).__init__()
+        self.vertex = [2,0,0],[1,0,1],[0,0,2],[-1,0,1],[-2,0,0],[-1,0,-1],[0,0,-2],[1,0,-1]
+        self.edges = [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0]
+        self.faces = [0,1,2,3,4,5,6,7]
+        self.vertexColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.edgeColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.faceColor = [[200,200,200]]
+        self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
+        self.centerOfBody = vertex(0,0,0)
+        self.centerOfGravity = vertex(0,0,0)
+        # translating the object from origin to given position
+        if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
+            for i in range(0,len(self.vertex)):
+                self.vertex[i][0] += pos[0]
+                self.vertex[i][1] += pos[1]
+                self.vertex[i][2] += pos[2]
+
 
 class Cylinder(physics):
     def __init__(self,pos):

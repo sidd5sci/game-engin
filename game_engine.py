@@ -1,16 +1,16 @@
+
+#if __name__ == '__main__':from GUI_layout import *
+
 import pygame
 from pygame.locals import *
 import time,random
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from math import *
-from physics import *
+#from physics import *
 from geometry import *
-
-if __name__ == '__main__':
-    from GUI_layout import *
-else:
-    from GUI_layout import root
+from import_export import *
+from GA import *
 
 '''
 ==========================================
@@ -115,13 +115,27 @@ def coords():
     #We're done drawing lines; tell OpenGL so.
     glEnd()
 
-def timeline(_object_):
-        if _object_.velocity.isnull() == False:
-            _object_.velocity.divide(_object_.dt)
-            vel = _object_.velocity.get()
-            # _object_.pos = vel
-            translate3d(_object_,vel)
-
+def timeline():
+    global _object_sequence_
+    for _object_ in _object_sequence_:
+        
+        if _object_[1].velocity.isnull() == False:
+        
+            oldPos = _object_[1].pos.get()
+            _object_[1].updatePos()
+            
+            newPos = _object_[1].pos.get()
+            dx,dy,dz = newPos[0]-oldPos[0],newPos[1]-oldPos[1],newPos[2]-oldPos[2]
+            translate3d_t(_object_[1],(dx,dy,dz))
+            
+        if _object_[1].omega.isnull() == False:
+            oldPos = _object_[1].theta.get()
+            _object_[1].updateTheta()
+            newPos = _object_[1].theta.get()
+            dx,dy,dz = newPos[0]-oldPos[0],newPos[1]-oldPos[1],newPos[2]-oldPos[2]
+            rotate3d(_object_[1],'x',dx)
+            rotate3d(_object_[1],'y',dy)
+            rotate3d(_object_[1],'z',dz)
 
 def mouseTracker(LastPosition):
     CurrentPosition = pygame.mouse.get_pos()
@@ -163,67 +177,91 @@ def worldToScreen(cords):
 ==========================================
 '''
 
-def _input_():
+def _input_(key,mouse_rel,mouse_buttons):
     global cube1,pointer3d,point
-    
-    # loop through the events
-    for event in pygame.event.get():
-        #check if the event is the x button
-        if event.type == pygame.QUIT:
-            #if it is quit the game
-            
-            pygame.quit()
-            exit(0)
-        if event.type == pygame.MOUSEBUTTONDOWN:
-                p = pygame.mouse.get_pos()
-                # convert the screen coordinates to world co-ordinates
-                loc = screenToWorld(p)
+    if key[pygame.K_x]:rotate3d(cube1,'x',dtheta)
+    if key[pygame.K_y]:rotate3d(cube1,'y',dtheta)
+    if key[pygame.K_z]:rotate3d(cube1,'z',dtheta)
+    if key[pygame.K_f]:translate3d_t(cube1,(1,0,0))
+    if key[pygame.K_h]:translate3d_t(cube1,(0,1,0))
+    if key[pygame.K_g]:scale3d(cube1,(0.5,0.5,0.5))
+    if key[pygame.K_p]:translate3d(cube1,(1,0,0))
+    if key[pygame.K_n]:createNewObject('cube')
+    if key[pygame.K_l]:v = vector((0,1,0),(0,0,0));cube1.applyAcc(9.87,v)# apply gravity
+    if key[pygame.K_o]:v = vector((0,4,0),(0,0,0));cube1.applyForce2(5,v)# have no rotational effect
+    if key[pygame.K_i]:v = vector((0,0,0),(0,0,-1));cube1.applyForce1((1,1,0),5,v)
+    if key[pygame.K_u]:v = vector((0,1,1),(0,0,0));cube1.applyAngAcc(0.11,v)# apply gravity
+
+    if mouse_buttons[0]:
+        p = pygame.mouse.get_pos()
+        # convert the screen coordinates to world co-ordinates
+        loc = screenToWorld(p)
                 
-                translate3d(pointer3d,(loc[0],loc[1],loc[2]))
-                print p
-        if event.type == pygame.MOUSEBUTTONUP:
-                pass
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                pass
-            if event.key == pygame.K_RIGHT:
-                pass
-            if event.key == pygame.K_UP:
-                pass
-            if event.key == pygame.K_DOWN:
-                pass
-            if event.key == pygame.K_LCTRL:
-                pass
-            if event.key == pygame.K_x:
-               rotate3d(cube1,'x',dtheta)
-            if event.key == pygame.K_y:
-               rotate3d(cube1,'y',dtheta)
-            if event.key == pygame.K_z:
-               rotate3d(cube1,'z',dtheta)
-            if event.key == pygame.K_g:
-               scale3d(cube1,(0.5,0.5,0.5))
-            if event.key == pygame.K_f:
-               translate3d_t(cube1,(1,0,0))
-               print 'cube pos: ',cube1.pos.get()
-            if event.key == pygame.K_h:
-               translate3d_t(cube1,(0,1,0))
-               print 'cube pos: ',cube1.pos.get()   
-            if event.key == pygame.K_p:
-               translate3d(cube1,(1,0,0))
-               print 'cube pos: ',cube1.pos.get()
-            if event.key == pygame.K_n:
-               createNewObject('cube')
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                pass
-            if event.key == pygame.K_RIGHT:
-                pass
-            if event.key == pygame.K_UP:
-                pass
-            if event.key == pygame.K_DOWN:
-                pass
+        translate3d(pointer3d,(loc[0],loc[1],loc[2]))
+        print p
+
+##    # loop through the events
+##    for event in pygame.event.get():
+##        #check if the event is the x button
+##        if event.type == pygame.QUIT:
+##            #if it is quit the game
+##            
+##            pygame.quit()
+##            exit(0)
+##        if event.type == pygame.MOUSEBUTTONDOWN:
+##                p = pygame.mouse.get_pos()
+##                # convert the screen coordinates to world co-ordinates
+##                loc = screenToWorld(p)
+##                
+##                translate3d(pointer3d,(loc[0],loc[1],loc[2]))
+##                print p
+##        if event.type == pygame.MOUSEBUTTONUP:
+##                pass
+##        if event.type == pygame.KEYDOWN:
+##            if event.key == pygame.K_LEFT:
+##                pass
+##            if event.key == pygame.K_RIGHT:
+##                pass
+##            if event.key == pygame.K_UP:
+##                pass
+##            if event.key == pygame.K_DOWN:
+##                pass
+##            if event.key == pygame.K_LCTRL:
+##                pass
+##            if event.key == pygame.K_x:
+##               rotate3d(cube1,'x',dtheta)
+##            if event.key == pygame.K_y:
+##               rotate3d(cube1,'y',dtheta)
+##            if event.key == pygame.K_z:
+##               rotate3d(cube1,'z',dtheta)
+##            if event.key == pygame.K_g:
+##               scale3d(cube1,(0.5,0.5,0.5))
+##            if event.key == pygame.K_f:
+##               translate3d_t(cube1,(1,0,0))
+##               print 'cube pos: ',cube1.pos.get()
+##            if event.key == pygame.K_h:
+##               translate3d_t(cube1,(0,1,0))
+##               print 'cube pos: ',cube1.pos.get()   
+##            if event.key == pygame.K_p:
+##               translate3d(cube1,(1,0,0))
+##               print 'cube pos: ',cube1.pos.get()
+##            if event.key == pygame.K_n:
+##               createNewObject('cube')
+##        if event.type == pygame.KEYUP:
+##            if event.key == pygame.K_LEFT:
+##                pass
+##            if event.key == pygame.K_RIGHT:
+##                pass
+##            if event.key == pygame.K_UP:
+##                pass
+##            if event.key == pygame.K_DOWN:
+##                pass
 def createCube():
     createNewObject('cube')
+def createPlane():
+    createNewObject('plane')
+def createCircle():
+    createNewObject('circle')
 '''
 ==========================================
     display function
@@ -233,6 +271,7 @@ def displayGL(mode,_object_):
     if mode =='vertex':
         glBegin(GL_POINTS)
         for v in _object_.vertex:
+                glColor3f(0.5,0,0.40)
                 glVertex3fv(v)
         glEnd()
     if mode =='edge':
@@ -254,7 +293,7 @@ def displayGL(mode,_object_):
         glBegin(GL_QUADS)    
         for face in face_list:
             for vertex in face:
-                glColor3fv(color.GRAY)
+                glColor3f(0.5,0,0.40)
                 glVertex3fv(vertex)
         glEnd()
 
@@ -267,7 +306,10 @@ def createNewObject(objectType):
         fillObjectSequence(newObject,'face',True)
     if objectType == 'plane':
         newObject = Plane(pointer3d.pos.get())
-        fillObjectSequence(newObject,'face',True)
+        fillObjectSequence(newObject,'edge',True)
+    if objectType == 'circle':
+        newObject = Circle(pointer3d.pos.get())
+        fillObjectSequence(newObject,'edge',True)
     if objectType == 'pointer':
         newObject = Cube(pointer3d.pos.get())
         fillObjectSequence(newObject,'edge',True)
@@ -301,6 +343,7 @@ def createNewObject(objectType):
 def fillObjectSequence(_object_,mode,state=False):
     global _object_sequence_
     i = len(_object_sequence_)
+    #  state True-> selected
     _object_sequence_.append((i,_object_,mode,state))
 
 def showObject():
@@ -312,7 +355,13 @@ def loadObject():
     global _object_sequence_depth_buffer_
     for o in _object_sequence_depth_buffer_:
         display(o[0],o[1])
+def findSelectedObject():
+    global _object_sequence_
+    for o in _object_sequence_:
+        if o[3] == True:
+            o[2].mode = 'selected'
 
+    
 ###########################################        
 def display(mode,_object_):
     global color
@@ -324,8 +373,7 @@ def display(mode,_object_):
     if mode == 'vertex':
        for v,c in zip(_object_.vertex,_object_.vertexColor):
            x,y,z = v
-           z += 5
-           #print v           
+           #z += 5        
            x -= cam.pos[0]
            y -= cam.pos[1]
            z += cam.pos[2]
@@ -438,72 +486,35 @@ print "\n==================help==================n"
 print "press [a w s d e q]  to control camera motion\n\n"
 print "press [x y z] to rotate the cube | press [g] scale the cube\n [f] apply force"
 
-def main():
-    
-    # initilize the main loop
-    while True:
-        # setting the smallest time variation
-        dt = float(clock.tick(60))/1000
-        clock.tick(60)
-            
-        # Fill the background color to screen as black
-        if Gmode == 'openGL':
-            glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        else:
-            screen.fill(color.BLACK)
-        
-        
-        # display the objects on the screen 
-        if Gmode =='openGL':
-            displayGL('face',cube1)
-            displayGL('edge',cube2)
-            displayGL('edge',cube3)
-            coords()
-        else:
-            display('edge',plane)
-            showObject()
-            display('edge',wCenter)
-            display('edge',pointer3d)
-         
-        # all animation show by timeline
-        timeline(cube1)
-        
-        
-        
-        # update the pygame window
-        pygame.display.flip()
-       
-        # get the input
-        key = pygame.key.get_pressed()
-        _input_()
-        mouse_rel = pygame.mouse.get_rel()
-        mouse_buttons = pygame.mouse.get_pressed()
-        # test the output area
-        if key[pygame.K_RCTRL]:
-            print 'hello'
-            print pointer3d.pos.get()
-            print cube1.centerOfBody.get()
-            mainloop()
-        # update the camera
-        if Gmode == 'openGL':
-            cam.updateGL(mouse_buttons,mouse_rel,key)
-        else:
-            cam.update(dt,key)
-            cam.rotateCam(dt,key,dtheta)
-            updateScreenScales()
-        root.update()
 
-        
+
+
+
 def init(mode):
     if mode == 'openGL':
         
         # initilize the screen
         screen = pygame.display.set_mode((width,height),OPENGL|DOUBLEBUF)
-    
+
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
         gluPerspective(45, width/height, 0.1,100.0)
         glTranslate(0,0,-35)
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        #Add ambient light:
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT,[0.2,0.2,0.2,1.0])
+        
+        #Add positioned light:
+        glLightfv(GL_LIGHT0,GL_DIFFUSE,[2,2,2,1])
+        glLightfv(GL_LIGHT0,GL_POSITION,[4,8,1,1])
 
+        
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        glEnable(GL_DEPTH_TEST)
+        glEnable(GL_LIGHTING)
+        glEnable(GL_LIGHT0)
+        glEnable(GL_NORMALIZE)
         return screen
     else:
         
@@ -514,7 +525,10 @@ def init(mode):
         pygame.display.update()
         return screen
 
-#########################################################    
+#########################################################
+    
+#########################################################
+
 
 
 
@@ -532,7 +546,7 @@ pygame.display.set_caption("Game engin - testing 2017")
 # initilise the clock
 clock = pygame.time.Clock()
 # graphics mode
-Gmode = 'openGL6' 
+Gmode = 'openGL' 
 screen = init(Gmode)
 
 '''
@@ -578,9 +592,81 @@ print 'Pointer ',pointer3d.pos.get(),'scales',scalex,scaley
 
 
 
+
+
+x =0
+def main():
+       global x
+    # initilize the main loop
+    #while True:
+       # setting the smallest time variation
+       dt = float(clock.tick(60))/1000
+       clock.tick(60)
+            
+       # Fill the background color to screen as black
+       if Gmode == 'openGL':
+            glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+       else:
+            screen.fill(color.BLACK)
+        
+        
+       # display the objects on the screen 
+       if Gmode =='openGL':
+            displayGL('face',cube1)
+            displayGL('edge',cube2)
+            displayGL('edge',cube3)
+            coords()
+       else:
+            display('edge',plane)
+            showObject()
+            display('edge',wCenter)
+            display('edge',pointer3d)
+         
+       # all animation show by timeline
+       timeline()
+    
+       
+       
+       pygame.draw.circle(screen,color.WHITE,(int(x),int(200)),4)
+       
+       if Gmode == 'openGL':
+           # screen update
+           pygame.display.flip()
+       else:
+           # update the screen
+           pygame.display.update()
+           
+       # get the input
+       key = pygame.key.get_pressed()
+       mouse_rel = pygame.mouse.get_rel()
+       mouse_buttons = pygame.mouse.get_pressed()
+       _input_(key,mouse_rel,mouse_buttons)
+       if key[pygame.K_RCTRL]:
+           print 'linear:',cube1.pos.get(),cube1.velocity.get(),cube1.acc.get()
+           print 'rotate:',cube1.theta.get(),cube1.omega.get(),cube1.angAcc.get()
+       # update the camera
+       if Gmode == 'openGL':
+            cam.updateGL(mouse_buttons,mouse_rel,key)
+       else:
+            cam.update(dt,key)
+            cam.rotateCam(dt,key,dtheta)
+            updateScreenScales()
+       
+       
+       x+=1
+       
 if __name__ == '__main__':
-    
-    
-    main()
-    root.mainloop()
-    
+   while 1:
+        main()
+        # loop through the events
+        for event in pygame.event.get():
+            #check if the event is the x button
+            if event.type == pygame.QUIT:
+                #if it is quit the game
+                
+                pygame.quit()
+                exit(0)
+
+
+
+   

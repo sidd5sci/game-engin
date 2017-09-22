@@ -8,11 +8,11 @@ class population:
 
       def __init__(self):
           self.dna = DNA()
-          self.fitness = 100
+          self.fitness = 0
           self.pos = vertex()
           self.objectType = ' '
           self.objectId = -1
-      def randomPopulation(self):#this shold create each time differently
+      def randomPopulation(self):
           
           self.fitness = 100
           self.pos.assign(10,0,10)

@@ -32,22 +32,61 @@ class physics(object):
         self.velocity = vector((0,0,0),(0,0,0))
         self.acc      = vector((0,0,0),(0,0,0))
         self.force    = vector((0,0,0),(0,0,0))
+        self.torque   = vector((0,0,0),(0,0,0))
+        self.omega    = vector((0,0,0),(0,0,0)) # angular velocity
+        self.MOI      = 1 # moment of inrtia
         self.time     = 0.0
         self.dt       = 0.15
+        self.angAcc   = vector((0,0,0),(0,0,0)) # angular acc
+        self.theta    = vector((0,0,0),(0,0,0)) # angular position
         # material physics
-        self.IR = 0.0
-        self.rigidity = 0.0
-        self.color = []
+        self.IR = 0.0 # rifrective index
+        self.rigidity = 0.0 # cofficent of the rigidity
+        self.meu = 0.0 # coiffiecent of friction
     def assign_dt(self,dt):
         # this dt controls the change of speed of display of the change in the object position
         self.dt = dt
-    def applyForce1(self,mag,direction):
+    def applyForce(self,mag,direction):
         # create a new zero vector
         temp = vector((0,0,0),(0,0,0))
         # copying the direction vector to the temprary vector 
         temp.x,temp.y,temp.z = direction       
         # multiplying the vector to the magnitude
         temp.mult(mag)
+        # copying the temp force to the force
+        self.force.add(temp)
+        # updating the acc
+        self.updateAcc()
+    def applyForce1(self,point,mag,direction):
+        # create a new zero vector
+        temp = vector((0,0,0),(0,0,0))
+        # copying the direction vector to the temprary vector 
+        temp.x,temp.y,temp.z = direction.x,direction.y,direction.z
+        # multiplying the vector to the magnitude
+        temp.mult(mag)
+        # checking the line execution of the focre
+        k = self.pos.get()
+        r = vector(k,point)
+        rx,ry,rz = makeVector(r.x,r),makeVector(r.y,r),makeVector(r.z,r)
+        # calculating the rotational effect of that force
+        phi = getAngle(r,temp) # get angle b/w r,F
+        torque = r.magCal()*temp.magCal() *math.sin(phi) # T = |r|*|F|*sin(phi)* n^
+        _dir_ = cross(r,temp) # n^
+        print r.get(),point
+        _dir_.normalized()
+        v = makeVector(torque,_dir_)
+        self.torque.copy(v)
+        # calculating the angular acc
+        self.updateAngAcc()
+        
+        # calculating the force 
+        if temp.isAlong(rx):
+           temp.multS(rx)
+        if temp.isAlong(ry):
+           temp.multS(ry)
+        if temp.isAlong(rz):
+           temp.multS(rz)
+         
         # copying the temp force to the force
         self.force.add(temp)
         # updating the acc
@@ -63,20 +102,15 @@ class physics(object):
         self.force.add(temp)
         # updating the acc
         self.updateAcc()
-    def applyForce(self,force):
-        # adding force to object must be vector
-        self.force.add(force)
-        # dividing force by mass of object
-        self.force.divide(self.mass)
-        self.acc.add(self.force)
-        # multipling the acc to delta time
-        self.acc.mult(self.dt)
-        self.velocity.add(self.acc)
     def copyForce(self,force):
         # adding force to object
         self.force.add(force)
         # updating the acc
         self.updateAcc()
+    def applyTorque(self,point):
+        # here point is point of execution of the force on the body
+        
+        pass
     def applyThrust(self,mag,direction):
         direction.reverse()
         self.applyForce2(mag,direction)
@@ -92,13 +126,29 @@ class physics(object):
         
         # update the velocity
         self.updateVelocity()
-    def applyAcc(self,acc):
-        self.acc.add(acc)
-        # multipling the acc to delta time
-        # formula a = v/t
-        self.acc.mult(self.dt)
+    def applyAcc(self,mag,direction):
+        # create a new zero vector
+        temp = vector((0,0,0),(0,0,0))
+        # copying the direction vector to the temprary vector 
+        temp.x,temp.y,temp.z = direction.x,direction.y,direction.z
+        # multiplying the vector to the magnitude
+        temp.mult(mag)
+        # copying the temp
+        self.acc.add(temp)
         # update the velocity
         self.updateVelocity()
+        #self.velocity.add(self.acc)
+    def applyAngAcc(self,mag,direction):
+        # create a new zero vector
+        temp = vector((0,0,0),(0,0,0))
+        # copying the direction vector to the temprary vector 
+        temp.x,temp.y,temp.z = direction.x,direction.y,direction.z
+        # multiplying the vector to the magnitude
+        temp.mult(mag)
+        # copying the temp
+        self.angAcc.add(temp)
+        # update the velocity
+        self.updateOmega()
         #self.velocity.add(self.acc)
     def bound2d(self,window = []):
         # right
@@ -218,6 +268,30 @@ class physics(object):
         self.acc.add(temp)
         # update the velocity
         self.updateVelocity()
+    def updateAngAcc(self):
+        # formula a = dw/dt
+        # create a temp vector
+        temp = vector((0,0,0),(0,0,0))
+        # copying force in the temp
+        temp.copy(self.torque)
+        # dividing force by mass of object
+        temp.divide(self.MOI)
+        # copy the instatneous acc 
+        self.angAcc.add(temp)
+        # update the velocity
+        self.updateOmega()
+    def updateOmega(self):
+        # formula w = w0 + (a* dt)
+        # create a temp variable
+        temp = vector((0,0,0),(0,0,0))
+        # copy the acc to the temp
+        temp.copy(self.angAcc)
+        # multipling the acc to delta time
+        temp.mult(self.dt)
+        # updateing the velocity
+        self.omega.add(temp)
+        # update the time
+        self.time += self.dt
     def updateVelocity(self):
         # formula v = u + (a* deltaT)
         # create a temp variable
@@ -230,14 +304,36 @@ class physics(object):
         self.velocity.add(temp)
         # update the time
         self.time += self.dt
-        
+    def updateVelocity1(self):
+        # formula v = ut + 0.5*(a* deltaT^2)
+        # create a temp variable
+        temp = vector((0,0,0),(0,0,0))
+        # copy the acc to the temp
+        temp.copy(self.acc)
+        # multipling the acc to delta time
+        temp.mult(((self.dt**2)/2))
+        # multiply the u with dt
+        self.velocity.mult(self.dt)
+        # updateing the velocity
+        self.velocity.add(temp)
+        # update the time
+        self.time += self.dt
+    def updateTheta(self):
+        if self.omega.x != 0 or self.omega.y != 0 or self.omega.z != 0:
+            self.theta.x += (self.omega.x*self.dt) + (0.5 * self.angAcc.x*(self.dt**2))
+            self.theta.y += (self.omega.y*self.dt) + (0.5 * self.angAcc.y*(self.dt**2))
+            self.theta.z += (self.omega.z*self.dt) + (0.5 * self.angAcc.z*(self.dt**2))
+        # update the time
+        self.time += self.dt
     def updatePos(self):
 
         if self.velocity.x != 0 or self.velocity.y != 0 or self.velocity.z != 0:
-            self.pos.x += self.velocity.x*self.dt
-            self.pos.y += self.velocity.y*self.dt
-            self.pos.z += self.velocity.z*self.dt
-
+            self.pos.x += (self.velocity.x*self.dt) + (0.5 * self.acc.x*(self.dt**2))
+            self.pos.y += (self.velocity.y*self.dt) + (0.5 * self.acc.y*(self.dt**2))
+            self.pos.z += (self.velocity.z*self.dt) + (0.5 * self.acc.z*(self.dt**2))
+        # update the time
+        self.time += self.dt
+        #print (self.velocity.x*self.dt)
 '''
 ================================================================================
 ================================================================================
