@@ -86,12 +86,19 @@ physicsmenu = Menu(menu)
 menu.add_cascade(label="Physics" ,menu = physicsmenu)
 physicsmenu.add_command(label="Force", command=about)
 physicsmenu.add_command(label="Torque", command=about)
+# Genatic algorithms
+GAmenu = Menu(menu)
+menu.add_cascade(label="GA" ,menu = GAmenu)
+GAmenu.add_command(label="Init Sequence", command=initGA)
+GAmenu.add_command(label="Live", command=livePopulation)
 # help menu option
 helpmenu = Menu(menu)
 menu.add_cascade(label="Help" ,menu = helpmenu)
 helpmenu.add_command(label="About", command=about)
 helpmenu.add_command(label="Version", command=about)
 helpmenu.add_command(label="Update", command=about)
+
+
 
 def buttons():
     button_createCube = Button(buttonwin,text="Cube",relief=RIDGE,width=8,command=createCube)

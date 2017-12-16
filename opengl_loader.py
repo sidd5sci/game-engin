@@ -4,7 +4,7 @@
 # LMB + move: rotate
 # RMB + move: pan
 # Scroll wheel: zoom in/out
-import sys, pygame
+import sys, pygame,os
 from pygame.locals import *
 from pygame.constants import *
 from OpenGL.GL import *
@@ -30,6 +30,12 @@ glShadeModel(GL_SMOOTH)           # most obj files expect to be smooth-shaded
 
 # LOAD OBJECT AFTER PYGAME INIT
 filename = input('file: ')
+# Directory of objects lib
+_dir_ = '\objects_lib\\'
+# path of this file
+currentPath = os.getcwd()
+#########################
+filename = currentPath+_dir_+filename
 #obj = OBJ(sys.argv[1], swapyz=True)
 obj = OBJ(filename, swapyz=True)
 

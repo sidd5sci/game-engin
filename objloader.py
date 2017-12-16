@@ -1,10 +1,18 @@
-import pygame
+import pygame,os
 from OpenGL.GL import *
+
+
+# Directory of objects lib
+_dir_ = '\objects_lib\\'
+# path of this file
+currentPath = os.getcwd()
+
+
 
 def MTL(filename):
     contents = {}
     mtl = None
-    for line in open(filename, "r"):
+    for line in open(currentPath+_dir_+filename, "r"):
         if line.startswith('#'): continue
         values = line.split()
         if not values: continue
@@ -39,6 +47,7 @@ class OBJ:
         self.faces = []
 
         material = None
+        
         for line in open(filename, "r"):
             if line.startswith('#'): continue
             values = line.split()

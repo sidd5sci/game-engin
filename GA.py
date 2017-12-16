@@ -2,40 +2,49 @@
 import random,time
 import math
 from dna import *
-from vector import *
+
 
 class population:
 
       def __init__(self):
           self.dna = DNA()
           self.fitness = 0
-          self.pos = vertex()
           self.objectType = ' '
           self.objectId = -1
-      def randomPopulation(self):
+          self.health = 100
+          self.state = 'alive'
+      def randomize(self):
           
-          self.fitness = 100
-          self.pos.assign(10,0,10)
+          self.fitness = 0
+          self.health = 100
           self.dna.randomDna(8)
           
       
               
       
-
+def createRandomPopulation(n):
+      for i in range(0,n):
+            p = population()
+            p.randomize()
+            Population.append(p)
 
 
         
 
 def Genration():
     global genration
-    global Population
-    global initialPopulation
     genration += 1
-    
-    for i in range(0,initialPopulation):
-        Population[i].LiveThePopulation()
-      
-         
+          
+def naturalSelection(task,**args):
+    # run the GA simulation in physical world
+    for i in range(0,len(Population)):
+        fit(Population[i],task,**args)# pass the fintness function into this
+        # by default fitness is depends on the time taken by the creature to perform the task
+    for i in range(0,len(Population)):
+        if Population[i].health < 20:
+            Population[i].state = 'dead'
+
+            
 def ShowFitness():
     global Population
     global initialPopulation
@@ -43,7 +52,7 @@ def ShowFitness():
     for i in range(0,initialPopulation):
         Population[i].CalFitness()
         
-def FindBestFitesest():
+def findBestFitesest():
     global parent1
     global parent2
     global Population
@@ -63,8 +72,11 @@ genration = 0
 mutationRate = 10 # in percentage
 crossOverRate = 2 # in percentage
 #======================================
+
+
 def main():
     print 'Starting genetic sequence'
-
+    createRandomPopulation(5)
+    Genration()
 if __name__ == '__main__':
    main()

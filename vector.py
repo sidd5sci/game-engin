@@ -63,13 +63,21 @@ class vector(object):
         self.x += vctr.x; self.y += vctr.y; self.z += vctr.z
         self.magCal()
     def multS(self,vctr):
-        self.x *= vctr.x; self.y *= vctr.y; self.z *= vctr.z
-        self.magCal()
+        x,y,z = vctr.x,vctr.y,vctr.z
+        x1,y1,z1 = self.x,self.y,self.z
+        x *= x1; y *= y1; z *= z1
+        result = x+y+z
+        return result
     def multV(self,vctr):
-        self.x *= (self.y*vctr.z - self.z*vctr.y)
-        self.z *= (self.x*vctr.z - self.z*vctr.x)
-        self.z *= (self.x*vctr.z - self.y*vctr.x)
+        x = (vctr.y*self.z - vctr.z*self.y)
+        y = (vctr.x*self.z - vctr.z*self.x)
+        z = (vctr.x*self.y - vctr.y*self.x)
+        
+        v = vector((0,0,0),(0,0,0))
+        v.assign(x,y,z)
+        self.copy(v)
         self.magCal()
+        return v        
     def divide(self,qt):# dividing vector by scaler quantity
         self.x /= qt; self.y /= qt; self.z /= qt
         self.magCal()
@@ -140,7 +148,7 @@ def makeVector(mag,_dir_):
     v = vector((0,0,0),(0,0,0))
     v.x,v.y,v.z = _dir_.x,_dir_.y,_dir_.z
     v.normalized()
-    v.mult(mag)
+    v.mult(1/mag)
     v.magCal()
     return v
 def getAngle(vctr1,vctr2):
@@ -155,11 +163,13 @@ def dot(vctr,vctr1):
         result = x+y+z
         return result
 def cross(vctr,vctr1):
-        vctr.x *= (vctr.y*vctr1.z - vctr.z*vctr1.y)
-        vctr.z *= (vctr.x*vctr1.z - vctr.z*vctr1.x)
-        vctr.z *= (vctr.x*vctr1.z - vctr.y*vctr1.x)
-        vctr.magCal()
-        return vctr
+        x = (vctr.y*vctr1.z - vctr.z*vctr1.y)
+        y = (vctr.x*vctr1.z - vctr.z*vctr1.x)
+        z = (vctr.x*vctr1.y - vctr.y*vctr1.x)
+        
+        v = vector((0,0,0),(0,0,0))
+        v.x,v.y,v.z = x,y,z
+        return v
 
 # =================================
 #   global variables

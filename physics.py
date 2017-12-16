@@ -126,6 +126,20 @@ class physics(object):
         
         # update the velocity
         self.updateVelocity()
+    def applyVelocity(self,mag,direction):
+        # create a new zero vector
+        temp = vector((0,0,0),(0,0,0))
+        # copying the direction vector to the temprary vector 
+        temp.x,temp.y,temp.z = direction.x,direction.y,direction.z
+        # normalizing the vector
+        temp.normalized()
+        # multiplying the vector to the magnitude
+        temp.mult(mag)
+        # copying the temp
+        self.velocity.add(temp)
+        # update the velocity
+        self.updatePos()
+        #self.velocity.add(self.acc)
     def applyAcc(self,mag,direction):
         # create a new zero vector
         temp = vector((0,0,0),(0,0,0))
