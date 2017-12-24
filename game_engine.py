@@ -215,26 +215,29 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_k]:gaHolder.append(initGA())
     if key[pygame.K_j]:livePopulation()
     if key[pygame.K_c]:
+        # printing out the data of all the objects
          for o in _object_sequence_:
             print (o[0],' | ',o[2],' | ',o[3])
     if mouse_buttons[0]:
+        # getting the current position of the mouse 
         p = pygame.mouse.get_pos()
         # convert the screen coordinates to world co-ordinates
         loc = screenToWorld(p)
-                
+        # translatting the 3d pointer to the location of the mouse
         translate3d(pointer3d,(loc[0],loc[1],loc[2]))
+        # print the  mouse position for any use
         print p
     if mouse_buttons[2]:
-        print "right key confirmed"
+        #print "right key confirmed"
         p = pygame.mouse.get_pos()
         # convert the screen coordinates to world co-ordinates
         loc = screenToWorld(p)
-        print p
+        # searching for objects those are under the radius of pointer (screen coords)
         for o in _object_sequence_:
-            pos = o[1].pos
-            print pos
+            pos = o[1].pos # getting the postion of the object  
+            # converting the object's cords to screen cords
             src_pos = worldToScreen([pos.x,pos.y,pos.z])
-            
+            # updating the selection 
             if calDistance2d(p,src_pos) <= 10:
                o[3] = True
               
@@ -623,6 +626,8 @@ def updateScreenScales():
     pixelFactor = 200/cam.pos[2]
     scalex,scaley = -width/pixelFactor,-height/pixelFactor
     
+############################################################
+
 ############################################################
 #display section 2d 
 def pointer():
