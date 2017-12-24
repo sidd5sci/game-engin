@@ -29,19 +29,14 @@ class GA:
         mutationRate = 10 # in percentage
         crossOverRate = 2 # in percentage
         #======================================
-
       
     def createRandomPopulation(self,n):
         for i in range(0,n):
                 p = population()
                 p.randomize()
                 Population.append(p)
-
-
-            
-
+        
     def Genration(self):
-        global genration
         genration += 1
             
     def naturalSelection(self,task,**args):
@@ -55,17 +50,11 @@ class GA:
 
                 
     def ShowFitness(self):
-        global Population
-        global initialPopulation
-        
+                
         for i in range(0,initialPopulation):
             Population[i].CalFitness()
             
     def findBestFitesest(self):
-        global parent1
-        global parent2
-        global Population
-        global initialPopulation
         parent1 = parent2 = Population[0]
         for i in range(1,initialPopulation):
             #print(parent1.fitness," | ",parent2.fitness," || ",Population[i].fitness)
@@ -74,7 +63,12 @@ class GA:
                 parent1 = Population[i]
             elif parent2.fitness < Population[i].fitness:
                 parent2 = Population[i]
-
+    def crossOverEngine():
+        pass
+    def mutation():
+        pass
+    def regenration()
+        pass
 
 def main():
     print 'Starting genetic sequence'

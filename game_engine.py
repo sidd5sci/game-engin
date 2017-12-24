@@ -416,26 +416,28 @@ def initGA():
         ga.Population[i].objectId = obj[0]
     return ga
 def livePopulation():
-    print 'genetic simulator running...'
-
-    # run the GA simulation in physical world
-    Genration()
-    for i in range(0,len(Population)):
-        
-        objResult = search_object(Population[i].objectId)
-        
-        if genration == 1:
-            v = vector((0,0,0),(random.uniform(-5,5),0,random.uniform(-5,5)))
-            objResult.applyVelocity(0.2,v)
-            objResult.applyAngAcc(0.1,v)
+    global gaHolder
+    print 'Genetic simulator running...'
+    # fetching the GA
+    for ga in gaHolder:
+        # run the GA simulation in physical world
+        ga.Genration()
+        for i in range(0,len(ga.Population)):
             
-    for i in range(0,10000000):
-        naturalSelection(task,**args)
-        
-    findBestFitesest()
-    crossOverEngine()
-    mutation()
-    regenration()
+            objResult = search_object(ga.Population[i].objectId)
+            
+            if ga.genration == 1:
+                v = vector((0,0,0),(random.uniform(-5,5),0,random.uniform(-5,5)))
+                objResult.applyVelocity(0.2,v)
+                objResult.applyAngAcc(0.1,v)
+                
+        #for i in range(0,10000000):
+            #ga.naturalSelection(task,**args)
+            
+        ga.findBestFitesest()
+        ga.crossOverEngine()
+        ga.mutation()
+        ga.regenration()
 
 
 
