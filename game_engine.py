@@ -211,7 +211,7 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_o]:v = vector((0,4,0),(0,0,0));_selected_object_.applyForce1((1,1,0),1,v)   
     if key[pygame.K_u]:v = vector((0,1,1),(0,0,0));_selected_object_.applyAngAcc(0.11,v)# apply gravity
     if key[pygame.K_v]:deselectAllObjects()# deselects all the objects 
-    if key[pygame.K_k]:initGA();
+    if key[pygame.K_k]:gaHolder.append(initGA())
     if key[pygame.K_j]:livePopulation()
     if key[pygame.K_c]:
          for o in _object_sequence_:
