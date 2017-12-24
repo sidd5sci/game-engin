@@ -405,15 +405,16 @@ def search_object(_id_):
 #################################################
 def initGA():
     print 'Starting genetic sequence'
+    ga = GA()
     # strating the random population
     objType = 'cube'
-    createRandomPopulation(10)
+    ga.createRandomPopulation(10)
     for i in range(0,len(Population)):
         createNewObject(objType)
         translate3d_t(pointer3d,(4,0,0))    
         obj = _object_sequence_[len(_object_sequence_)-1]
-        Population[i].objectId = obj[0]
-
+        ga.Population[i].objectId = obj[0]
+    return ga
 def livePopulation():
     print 'genetic simulator running...'
 
@@ -729,6 +730,9 @@ fillObjectSequence(cube2,'vertex')
 fillObjectSequence(cube3,'edge')
 # selected object
 _selected_object_ = cube1
+# GA object holder for global use
+gaHolder = []
+ 
 print 'Pointer ',pointer3d.pos.get(),'scales',scalex,scaley
 
 

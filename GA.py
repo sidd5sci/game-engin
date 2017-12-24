@@ -8,10 +8,10 @@ class population:
 
       def __init__(self):
           self.dna = DNA()
-          self.fitness = 0
+          self.fitness = 0 # fitness is how good the creature is in finding the goal into the simulation 
           self.objectType = ' '
           self.objectId = -1
-          self.health = 100
+          self.health = 100 # health is physical health of the creature
           self.state = 'alive'
       def randomize(self):
           
@@ -31,7 +31,7 @@ class GA:
         #======================================
 
       
-    def createRandomPopulation(n):
+    def createRandomPopulation(self,n):
         for i in range(0,n):
                 p = population()
                 p.randomize()
@@ -40,11 +40,11 @@ class GA:
 
             
 
-    def Genration():
+    def Genration(self):
         global genration
         genration += 1
             
-    def naturalSelection(task,**args):
+    def naturalSelection(self,task,**args):
         # run the GA simulation in physical world
         for i in range(0,len(Population)):
             fit(Population[i],task,**args)# pass the fintness function into this
@@ -54,14 +54,14 @@ class GA:
                 Population[i].state = 'dead'
 
                 
-    def ShowFitness():
+    def ShowFitness(self):
         global Population
         global initialPopulation
         
         for i in range(0,initialPopulation):
             Population[i].CalFitness()
             
-    def findBestFitesest():
+    def findBestFitesest(self):
         global parent1
         global parent2
         global Population
