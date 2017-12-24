@@ -4,6 +4,8 @@
 import pygame
 from pygame.locals import *
 import time,random
+from OpenGL.GL import *
+from OpenGL.GLU import *
 from math import *
 from geometry import *
 from import_export import *
@@ -13,7 +15,7 @@ from GA import *
 ==========================================
     camera class
 ==========================================
-'''          
+'''        x  
 class Cam:
     def __init__(self,pos=(0,0,0),rot=(0,0),center=(0,0,0)):
         self.pos = list(pos)   #The sphere's center
@@ -57,7 +59,13 @@ class Cam:
                 self.pos[0] =  self.pos[0]*c1 + self.pos[1]*s1
                 self.pos[1] = -temp*s1 + self.pos[1]*c1
 
-    
+    def updateGL(self,mouse_buttons,mouse_rel,key):
+        if mouse_buttons[0]:
+            self.rot[0] += mouse_rel[0]
+            self.rot[1] += mouse_rel[1]
+        s = 0.015*10
+        if key[pygame.K_q]: self.pos[2] -= s
+        if key[pygame.K_e]: self.pos[2] += s
 '''
 ==========================================
     colors class
@@ -81,6 +89,30 @@ class colors(object):
 '''
 
                 
+
+   
+def coords():
+    #Start drawing lines.  Each subsequent pair of glVertex*() calls will draw one line.
+    glBegin(GL_LINES)
+    #Change the color to red.  All subsequent geometry we draw will be red.
+    glColor3f(1,0,0)
+    #Make two vertices, thereby drawing a (red) line.
+    glVertex(0,0,0); glVertex3f(1,0,0)
+    #Change the color to green.  All subsequent geometry we draw will be green.
+    glColor3f(0,1,0)
+    #Make two vertices, thereby drawing a (green) line.
+    glVertex(0,0,0); glVertex3f(0,1,0)
+    #Change the color to blue.  All subsequent geometry we draw will be blue.
+    glColor3f(0,0,1)
+    #Make two vertices, thereby drawing a (blue) line.
+    glVertex(0,0,0); glVertex3f(0,0,1)
+    #Change the color to white again.  All subsequent geometry we draw will be white.  Strictly
+    #speaking this isn't required (since we reset the color on line 166 before we draw anything
+    #again).  However, it is good practice to reset the color to white, since forgetting to can be a
+    #hard-to-track-down bug (e.g. when combining with texturing).
+    glColor3f(1,1,1)
+    #We're done drawing lines; tell OpenGL so.
+    glEnd()
 
 def timeline():
     global _object_sequence_
@@ -260,6 +292,35 @@ def createCircle():
     display function
 ==========================================
 '''
+def displayGL(mode,_object_):
+    if mode =='vertex':
+        glBegin(GL_POINTS)
+        for v in _object_.vertex:
+                glColor3f(0.5,0,0.40)
+                glVertex3fv(v)
+        glEnd()
+    if mode =='edge':
+        glBegin(GL_LINES)
+        for edge in _object_.edges:
+            for vertex in edge:
+                glVertex3fv(_object_.vertex[vertex])
+        glEnd()
+    if mode == 'face':
+        
+        # filling the vertex in face list
+        face_list =[]
+        for face in _object_.faces:
+            vertex_list = []
+            for v in face:
+                 vertex_list.append(_object_.vertex[v])
+            face_list.append(vertex_list)
+
+        glBegin(GL_QUADS)    
+        for face in face_list:
+            for vertex in face:
+                glColor3f(0.5,0,0.40)
+                glVertex3fv(vertex)
+        glEnd()
 
 def createNewObject(objectType):
     if objectType == 'arrow':
@@ -572,7 +633,29 @@ print "press [x y z] to rotate the cube | press [g] scale the cube\n [f] apply f
 def init(mode):
     if mode == 'openGL':
         
-        pass
+        # initilize the screen
+        screen = pygame.display.set_mode((width,height),OPENGL|DOUBLEBUF)
+
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        gluPerspective(45, width/height, 0.1,100.0)
+        glTranslate(0,0,-35)
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        #Add ambient light:
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT,[0.2,0.2,0.2,1.0])
+        
+        #Add positioned light:
+        glLightfv(GL_LIGHT0,GL_DIFFUSE,[2,2,2,1])
+        glLightfv(GL_LIGHT0,GL_POSITION,[4,8,1,1])
+
+        
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        glEnable(GL_DEPTH_TEST)
+        glEnable(GL_LIGHTING)
+        glEnable(GL_LIGHT0)
+        glEnable(GL_NORMALIZE)
+        return screen
     else:
         
         # initilize the screen
@@ -603,7 +686,7 @@ pygame.display.set_caption("Game engin - testing 2017")
 # initilise the clock
 clock = pygame.time.Clock()
 # graphics mode
-Gmode = 'openGpL' 
+Gmode = 'openGL' 
 screen = init(Gmode)
 
 '''
@@ -663,14 +746,18 @@ def main():
             
        # Fill the background color to screen as black
        if Gmode == 'openGL':
-            pass
+            glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
        else:
             screen.fill(color.BLACK)
         
         
        # display the objects on the screen 
        if Gmode =='openGL':
-           pass
+##            displayGL('face',cube1)
+##            displayGL('edge',cube2)
+##            displayGL('edge',cube3)
+            showObjectGL()
+            coords()
        else:
             display('edge',plane)
             showObject()
@@ -686,8 +773,7 @@ def main():
        
        if Gmode == 'openGL':
            # screen update
-           #pygame.display.flip()
-           pass
+           pygame.display.flip()
        else:
            # update the screen
            pygame.display.update()
@@ -703,8 +789,7 @@ def main():
            print 'rotate:',cube1.theta.get(),cube1.omega.get(),cube1.angAcc.get()
        # update the camera
        if Gmode == 'openGL':
-            pass
-            #cam.updateGL(mouse_buttons,mouse_rel,key)
+            cam.updateGL(mouse_buttons,mouse_rel,key)
        else:
             cam.update(dt,key)
             cam.rotateCam(dt,key,dtheta)
