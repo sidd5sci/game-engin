@@ -81,7 +81,20 @@ class colors(object):
         self.GRAY = (100,100,100)
         self.YELLOW = (254,254,0)
         self.MAGENTA = (254,0,254)
-
+'''
+==========================================
+    objects joining  
+==========================================
+'''
+class joints:
+    def __init__(self):
+        self.type = 'rigid' # 1->rigid | 2->physical
+    def rotate(self):
+        pass
+    def move(self):
+        pass
+    def scale(self):
+        pass
 '''
 ==========================================
    global functions
@@ -450,13 +463,13 @@ def livePopulation():
                 objResult.applyVelocity(0.2,v)
                 objResult.applyAngAcc(0.1,v)
                 
-        #for i in range(0,10000000):
-            #ga.naturalSelection(task,**args)
+            #for i in range(0,10000000):
+                #ga.naturalSelection(task,**args)
             
-        ga.findBestFitesest()
-        ga.crossOverEngine()
-        ga.mutation()
-        ga.regenration()
+            ga.findBestFitesest()
+            ga.crossOverEngine()
+            ga.mutation()
+            ga.regenration()
 
 
 

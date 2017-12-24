@@ -1,6 +1,21 @@
 # importing the physics
 from physics import *
 from transformations import *
+
+'''
+==========================================
+    objects joining  
+==========================================
+'''
+class joints:
+    def __init__(self):
+        self.type = 'rigid' # 1->rigid | 2->physical
+    def rotate(self):
+        pass
+    def move(self):
+        pass
+    def scale(self):
+        pass
 '''
 ==========================================
     object classes
@@ -293,6 +308,7 @@ class Cube(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(pos[0],pos[1],pos[2])
         self.centerOfGravity = vertex(pos[0],pos[1],pos[2])
+        self.joints = list() # store the id and joint type data 
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
