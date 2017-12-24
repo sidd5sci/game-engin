@@ -409,7 +409,7 @@ def initGA():
     # strating the random population
     objType = 'cube'
     ga.createRandomPopulation(10)
-    for i in range(0,len(Population)):
+    for i in range(0,len(ga.Population)):
         createNewObject(objType)
         translate3d_t(pointer3d,(4,0,0))    
         obj = _object_sequence_[len(_object_sequence_)-1]
