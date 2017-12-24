@@ -235,7 +235,7 @@ def _input_(key,mouse_rel,mouse_buttons):
             src_pos = worldToScreen(pos)
             
             if calDistance2d(p,src_pos) <= 10:
-               o[3] == True:
+               o[3] = True
               
 
 
