@@ -141,10 +141,11 @@ def mouseTracker(LastPosition):
     dx = CurrentPosition[0] -LastPosition[0]
     dy = CurrentPosition[1] -LastPosition[1]
     return dx,dy
-
 # dstance claculator function
 def calDistance(a,b):
     return math.sqrt(((a[0]-b[0])**2)+((a[1]-b[1])**2)+((a[2]-b[2])**2))
+def calDistance2d(a,b):
+    return math.sqrt(((a[0]-b[0])**2)+((a[1]-b[1])**2))
 
 # this function finds the geometrical center of the surface
 def calCenter(surface):
@@ -223,8 +224,21 @@ def _input_(key,mouse_rel,mouse_buttons):
                 
         translate3d(pointer3d,(loc[0],loc[1],loc[2]))
         print p
-    if mouse_buttons[1]:
+    if mouse_buttons[2]:
         print "right key confirmed"
+        p = pygame.mouse.get_pos()
+        # convert the screen coordinates to world co-ordinates
+        loc = screenToWorld(p)
+        print p
+        for o in _object_sequence_:
+            pos = o[1].pos
+            src_pos = worldToScreen(pos)
+            
+            if calDistance2d(p,src_pos) <= 10:
+               o[3] == True:
+              
+
+
 ##    # loop through the events
 ##    for event in pygame.event.get():
 ##        #check if the event is the x button
