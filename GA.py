@@ -63,11 +63,11 @@ class GA:
                 parent1 = Population[i]
             elif parent2.fitness < Population[i].fitness:
                 parent2 = Population[i]
-    def crossOverEngine():
+    def crossOverEngine(self):
         pass
-    def mutation():
+    def mutation(self):
         pass
-    def regenration()
+    def regenration(self):
         pass
 
 def main():
