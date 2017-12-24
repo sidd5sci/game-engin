@@ -233,7 +233,7 @@ def _input_(key,mouse_rel,mouse_buttons):
         for o in _object_sequence_:
             pos = o[1].pos
             print pos
-            src_pos = worldToScreen([pos.x,pos.y,pos.z)
+            src_pos = worldToScreen([pos.x,pos.y,pos.z])
             
             if calDistance2d(p,src_pos) <= 10:
                o[3] = True
