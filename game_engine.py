@@ -689,7 +689,7 @@ pygame.display.set_caption("Game engin - testing 2017")
 # initilise the clock
 clock = pygame.time.Clock()
 # graphics mode
-Gmode = 'openGL' 
+Gmode = 'openGL1' 
 screen = init(Gmode)
 
 '''
