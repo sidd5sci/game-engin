@@ -15,7 +15,7 @@ from GA import *
 ==========================================
     camera class
 ==========================================
-'''        x  
+'''        
 class Cam:
     def __init__(self,pos=(0,0,0),rot=(0,0),center=(0,0,0)):
         self.pos = list(pos)   #The sphere's center
