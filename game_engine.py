@@ -632,30 +632,7 @@ print "press [x y z] to rotate the cube | press [g] scale the cube\n [f] apply f
 
 def init(mode):
     if mode == 'openGL':
-        
-        # initilize the screen
-        screen = pygame.display.set_mode((width,height),OPENGL|DOUBLEBUF)
-
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        gluPerspective(45, width/height, 0.1,100.0)
-        glTranslate(0,0,-35)
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        #Add ambient light:
-        glLightModelfv(GL_LIGHT_MODEL_AMBIENT,[0.2,0.2,0.2,1.0])
-        
-        #Add positioned light:
-        glLightfv(GL_LIGHT0,GL_DIFFUSE,[2,2,2,1])
-        glLightfv(GL_LIGHT0,GL_POSITION,[4,8,1,1])
-
-        
-        glMatrixMode(GL_MODELVIEW)
-        glLoadIdentity()
-        glEnable(GL_DEPTH_TEST)
-        glEnable(GL_LIGHTING)
-        glEnable(GL_LIGHT0)
-        glEnable(GL_NORMALIZE)
-        return screen
+       pass
     else:
         
         # initilize the screen
