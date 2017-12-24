@@ -223,7 +223,8 @@ def _input_(key,mouse_rel,mouse_buttons):
                 
         translate3d(pointer3d,(loc[0],loc[1],loc[2]))
         print p
-
+    if mouse_buttons[1]:
+        print "right key confirmed"
 ##    # loop through the events
 ##    for event in pygame.event.get():
 ##        #check if the event is the x button
