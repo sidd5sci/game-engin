@@ -470,161 +470,162 @@ def livePopulation():
 ###############################################
 #           Display function
 ###############################################
-def display(mode,_object_,select = False,edit = False):
+def display(mode,_object_,select = False,edit = False,display = True):
     global color
-    if select == True:# if object is selected
-        
-        # display the object in its vertex mode
-        if mode == 'vertex':
-           for v,c in zip(_object_.vertex,_object_.vertexColor):
-               x,y,z = v
-               #z += 5        
-               x -= cam.pos[0]
-               y -= cam.pos[1]
-               z += cam.pos[2]
-               
-               f = 200/z
-               x,y = x*f,y*f
-               pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
-        if mode == 'edge':
-            # put the cube on screen edge
-            for edge,c in zip(_object_.edges,_object_.edgeColor):
-                points = []
-                for x,y,z,in (_object_.vertex[edge[0]],_object_.vertex[edge[1]]):
-                    x -=cam.pos[0]
-                    y -=cam.pos[1]
-                    z +=cam.pos[2]
-                    f = 200/z
-                        
-                    x,y = x*f,y*f
-                    
-                    points +=  [(cx+int(x),cy+int(y))]
-
-                pygame.draw.line(screen,c,points[0],points[1],1)
-        if mode == 'face':
-            # convert 3d vertex to 2d screen coords
-            screen_verts=[]
-            for x,y,z in _object_.vertex:
-                x-= cam.pos[0]; y-=cam.pos[1];z+=cam.pos[2]
-                f= 200/z
-                x,y = x*f,y*f
-                screen_verts += [(cx+int(x),cy+int(y))]
-            # filling the vertex in face list
-            face_list =[]
-            for face in _object_.faces:
-                vertex_list = []
-                for v in face:
-                     vertex_list.append(screen_verts[v])
-                face_list.append(vertex_list)
-
-            # displaying the cube
-            for f,c in zip(face_list,_object_.faceColor):
-                pygame.draw.polygon(screen,c,f)        
-        # high lighting the vertex of the objects
-        for v,c in zip(_object_.vertex,_object_.vertexColor):
-               x,y,z = v
-               #z += 5        
-               x -= cam.pos[0]
-               y -= cam.pos[1]
-               z += cam.pos[2]
-               
-               f = 200/z
-               x,y = x*f,y*f
-               if select == True:
-                  pygame.draw.circle(screen,color.RED,(cx+int(x),cy+int(y)),2)
-        
-    else:# if object is not selected 
-
-        # display the object in its vertex mode
-        if mode == 'vertex':
-           for v,c in zip(_object_.vertex,_object_.vertexColor):
-               x,y,z = v
-               #z += 5        
-               x -= cam.pos[0]
-               y -= cam.pos[1]
-               z += cam.pos[2]
-               
-               f = 200/z
-               x,y = x*f,y*f
-               pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
-        if mode == 'edge':
-            # put the cube on screen edge
-            for edge,c in zip(_object_.edges,_object_.edgeColor):
-                points = []
-                for x,y,z,in (_object_.vertex[edge[0]],_object_.vertex[edge[1]]):
-                    x -=cam.pos[0]
-                    y -=cam.pos[1]
-                    z +=cam.pos[2]
-                    f = 200/z
-                        
-                    x,y = x*f,y*f
-                    
-                    points +=  [(cx+int(x),cy+int(y))]
-
-                pygame.draw.line(screen,c,points[0],points[1],1)
-        if mode == 'face':
-            # convert 3d vertex to 2d screen coords
-            screen_verts=[]
-            for x,y,z in _object_.vertex:
-                x-= cam.pos[0]; y-=cam.pos[1];z+=cam.pos[2]
-                f= 200/z
-                x,y = x*f,y*f
-                screen_verts += [(cx+int(x),cy+int(y))]
-            # filling the vertex in face list
-            face_list =[]
-            for face in _object_.faces:
-                vertex_list = []
-                for v in face:
-                     vertex_list.append(screen_verts[v])
-                face_list.append(vertex_list)
-
-            # displaying the cube
-            for f,c in zip(face_list,_object_.faceColor):
-                pygame.draw.polygon(screen,c,f)        
-
-
-        if mode == 'face1':
+    if display == True:
+        if select == True:# if object is selected
             
-            # convert 3d vertex to 2d screen coords
-            screen_verts=[]
-            for x,y,z in _object_.vertex:
-                x-= cam.pos[0]; y-=cam.pos[1];z+=cam.pos[2]
-                f= 200/z
-                x,y = x*f,y*f
-                screen_verts += [(cx+int(x),cy+int(y))]
+            # display the object in its vertex mode
+            if mode == 'vertex':
+            for v,c in zip(_object_.vertex,_object_.vertexColor):
+                x,y,z = v
+                #z += 5        
+                x -= cam.pos[0]
+                y -= cam.pos[1]
+                z += cam.pos[2]
                 
-            # filling the vertex in face list
-            face_list =[];face_list3d = [] ;face_depth = []
-            for face in _object_.faces:
-                vertex_list3d = []; vertex_list = []
-                for v in face:
-                     vertex_list3d.append(_object_.vertex[v])
-                     vertex_list.append(screen_verts[v])
-                face_list3d.append(vertex_list3d)
-                face_list.append(vertex_list)
+                f = 200/z
+                x,y = x*f,y*f
+                pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
+            if mode == 'edge':
+                # put the cube on screen edge
+                for edge,c in zip(_object_.edges,_object_.edgeColor):
+                    points = []
+                    for x,y,z,in (_object_.vertex[edge[0]],_object_.vertex[edge[1]]):
+                        x -=cam.pos[0]
+                        y -=cam.pos[1]
+                        z +=cam.pos[2]
+                        f = 200/z
+                            
+                        x,y = x*f,y*f
+                        
+                        points +=  [(cx+int(x),cy+int(y))]
+
+                    pygame.draw.line(screen,c,points[0],points[1],1)
+            if mode == 'face':
+                # convert 3d vertex to 2d screen coords
+                screen_verts=[]
+                for x,y,z in _object_.vertex:
+                    x-= cam.pos[0]; y-=cam.pos[1];z+=cam.pos[2]
+                    f= 200/z
+                    x,y = x*f,y*f
+                    screen_verts += [(cx+int(x),cy+int(y))]
+                # filling the vertex in face list
+                face_list =[]
+                for face in _object_.faces:
+                    vertex_list = []
+                    for v in face:
+                        vertex_list.append(screen_verts[v])
+                    face_list.append(vertex_list)
+
+                # displaying the cube
+                for f,c in zip(face_list,_object_.faceColor):
+                    pygame.draw.polygon(screen,c,f)        
+            # high lighting the vertex of the objects
+            for v,c in zip(_object_.vertex,_object_.vertexColor):
+                x,y,z = v
+                #z += 5        
+                x -= cam.pos[0]
+                y -= cam.pos[1]
+                z += cam.pos[2]
                 
-            # calculating the depth of surfaces 
+                f = 200/z
+                x,y = x*f,y*f
+                if select == True:
+                    pygame.draw.circle(screen,color.RED,(cx+int(x),cy+int(y)),2)
             
-            for face in face_list3d:
-                c = calCenter(face)
-                dist = calDistance(c,cam.pos)
-                face_depth.append(dist)
-            # sorting the face according to the depth    
-            for i in range(0,len(face_depth)):
-                for j in range(0,len(face_list)):
-                    if face_depth[i] >face_depth[j]:
-                        face_depth[i],face_depth[j] = face_depth[j],face_depth[i]
-                        face_list[i] ,face_list[j]  = face_list[j], face_list[i]
-            
-            # displaying the cube 
-            for i in range(0,len(face_list)):
-                if i == 3:
-                    pygame.draw.polygon(screen,color.GRAY,face_list[i])
-                elif i == 4:
-                    pygame.draw.polygon(screen,color.YELLOW,face_list[i])
-                else:
-                    pygame.draw.polygon(screen,color.RED,face_list[i])
-            
+        else:# if object is not selected 
+
+            # display the object in its vertex mode
+            if mode == 'vertex':
+            for v,c in zip(_object_.vertex,_object_.vertexColor):
+                x,y,z = v
+                #z += 5        
+                x -= cam.pos[0]
+                y -= cam.pos[1]
+                z += cam.pos[2]
+                
+                f = 200/z
+                x,y = x*f,y*f
+                pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
+            if mode == 'edge':
+                # put the cube on screen edge
+                for edge,c in zip(_object_.edges,_object_.edgeColor):
+                    points = []
+                    for x,y,z,in (_object_.vertex[edge[0]],_object_.vertex[edge[1]]):
+                        x -=cam.pos[0]
+                        y -=cam.pos[1]
+                        z +=cam.pos[2]
+                        f = 200/z
+                            
+                        x,y = x*f,y*f
+                        
+                        points +=  [(cx+int(x),cy+int(y))]
+
+                    pygame.draw.line(screen,c,points[0],points[1],1)
+            if mode == 'face':
+                # convert 3d vertex to 2d screen coords
+                screen_verts=[]
+                for x,y,z in _object_.vertex:
+                    x-= cam.pos[0]; y-=cam.pos[1];z+=cam.pos[2]
+                    f= 200/z
+                    x,y = x*f,y*f
+                    screen_verts += [(cx+int(x),cy+int(y))]
+                # filling the vertex in face list
+                face_list =[]
+                for face in _object_.faces:
+                    vertex_list = []
+                    for v in face:
+                        vertex_list.append(screen_verts[v])
+                    face_list.append(vertex_list)
+
+                # displaying the cube
+                for f,c in zip(face_list,_object_.faceColor):
+                    pygame.draw.polygon(screen,c,f)        
+
+
+            if mode == 'face1':
+                
+                # convert 3d vertex to 2d screen coords
+                screen_verts=[]
+                for x,y,z in _object_.vertex:
+                    x-= cam.pos[0]; y-=cam.pos[1];z+=cam.pos[2]
+                    f= 200/z
+                    x,y = x*f,y*f
+                    screen_verts += [(cx+int(x),cy+int(y))]
+                    
+                # filling the vertex in face list
+                face_list =[];face_list3d = [] ;face_depth = []
+                for face in _object_.faces:
+                    vertex_list3d = []; vertex_list = []
+                    for v in face:
+                        vertex_list3d.append(_object_.vertex[v])
+                        vertex_list.append(screen_verts[v])
+                    face_list3d.append(vertex_list3d)
+                    face_list.append(vertex_list)
+                    
+                # calculating the depth of surfaces 
+                
+                for face in face_list3d:
+                    c = calCenter(face)
+                    dist = calDistance(c,cam.pos)
+                    face_depth.append(dist)
+                # sorting the face according to the depth    
+                for i in range(0,len(face_depth)):
+                    for j in range(0,len(face_list)):
+                        if face_depth[i] >face_depth[j]:
+                            face_depth[i],face_depth[j] = face_depth[j],face_depth[i]
+                            face_list[i] ,face_list[j]  = face_list[j], face_list[i]
+                
+                # displaying the cube 
+                for i in range(0,len(face_list)):
+                    if i == 3:
+                        pygame.draw.polygon(screen,color.GRAY,face_list[i])
+                    elif i == 4:
+                        pygame.draw.polygon(screen,color.YELLOW,face_list[i])
+                    else:
+                        pygame.draw.polygon(screen,color.RED,face_list[i])
+    
 def updateScreenScales():
     global pixelFactor,scalex,scaley,cam
     pixelFactor = 200/cam.pos[2]
@@ -818,9 +819,10 @@ def main():
        mouse_buttons = pygame.mouse.get_pressed()
        _input_(key,mouse_rel,mouse_buttons)
        if key[pygame.K_RCTRL]:
-           translate3d_t(pointer3d,(1,0,0))
-           print 'linear:',cube1.pos.get(),cube1.velocity.get(),cube1.acc.get()
-           print 'rotate:',cube1.theta.get(),cube1.omega.get(),cube1.angAcc.get()
+           #translate3d_t(pointer3d,(1,0,0))
+           #print 'linear:',cube1.pos.get(),cube1.velocity.get(),cube1.acc.get()
+           #print 'rotate:',cube1.theta.get(),cube1.omega.get(),cube1.angAcc.get()
+           print _selected_object_sequence_[0][1]
        # update the camera
        if Gmode == 'openGL':
             cam.updateGL(mouse_buttons,mouse_rel,key)
