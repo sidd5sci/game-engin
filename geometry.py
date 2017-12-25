@@ -10,6 +10,7 @@ from transformations import *
 class joints:
     def __init__(self):
         self.type = 'rigid' # 1->rigid | 2->physical
+        self.connection = 0 # 0-> forword | 1-> backword
     def rotate(self):
         pass
     def move(self):

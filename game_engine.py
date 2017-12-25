@@ -81,20 +81,7 @@ class colors(object):
         self.GRAY = (100,100,100)
         self.YELLOW = (254,254,0)
         self.MAGENTA = (254,0,254)
-'''
-==========================================
-    objects joining  
-==========================================
-'''
-class joints:
-    def __init__(self):
-        self.type = 'rigid' # 1->rigid | 2->physical
-    def rotate(self):
-        pass
-    def move(self):
-        pass
-    def scale(self):
-        pass
+
 '''
 ==========================================
    global functions
@@ -219,7 +206,10 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_p]:
         for o in _object_sequence_:
             if o[3] == True:
-                translate3d(o[1],(1,0,0))
+                if len(o[1].joints):
+                    print o[1].joints 
+                else:
+                    translate3d(o[1],(1,0,0))
     if key[pygame.K_n]:createNewObject('cube')
     if key[pygame.K_l]:v = vector((0,1,0),(0,0,0));_selected_object_.applyAcc(9.87,v)# apply gravity
     if key[pygame.K_o]:v = vector((0,4,0),(0,0,0));_selected_object_.applyForce1((1,1,0),1,v)   
@@ -253,6 +243,7 @@ def _input_(key,mouse_rel,mouse_buttons):
             # updating the selection 
             if calDistance2d(p,src_pos) <= 10:
                o[3] = True
+               _selected_object_sequence_.append(o[0])
               
 
 
@@ -765,10 +756,13 @@ fillObjectSequence(cube1,'face',True)
 fillObjectSequence(cube2,'vertex')
 fillObjectSequence(cube3,'edge')
 # selected object
-_selected_object_ = cube1
+_selected_object_sequence_ = list()
 # GA object holder for global use
 gaHolder = []
- 
+# selecting the first object 
+_selected_object_sequence_.append(_object_sequence_[0][0])
+
+
 print 'Pointer ',pointer3d.pos.get(),'scales',scalex,scaley
 
 
