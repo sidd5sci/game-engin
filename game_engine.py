@@ -236,6 +236,7 @@ def _input_(key,mouse_rel,mouse_buttons):
         # printing out the data of all the objects
          for o in _object_sequence_:
             print (o[0],' | ',o[2],' | ',o[3])
+    if key[pygame.K_t]:pass
     if mouse_buttons[0]:
         # getting the current position of the mouse 
         p = pygame.mouse.get_pos()
@@ -492,16 +493,16 @@ def display(mode,_object_,select = False,edit = False,display = True):
             
             # display the object in its vertex mode
             if mode == 'vertex':
-            for v,c in zip(_object_.vertex,_object_.vertexColor):
-                x,y,z = v
-                #z += 5        
-                x -= cam.pos[0]
-                y -= cam.pos[1]
-                z += cam.pos[2]
-                
-                f = 200/z
-                x,y = x*f,y*f
-                pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
+                for v,c in zip(_object_.vertex,_object_.vertexColor):
+                    x,y,z = v
+                    #z += 5        
+                    x -= cam.pos[0]
+                    y -= cam.pos[1]
+                    z += cam.pos[2]
+                    
+                    f = 200/z
+                    x,y = x*f,y*f
+                    pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
             if mode == 'edge':
                 # put the cube on screen edge
                 for edge,c in zip(_object_.edges,_object_.edgeColor):
@@ -553,16 +554,16 @@ def display(mode,_object_,select = False,edit = False,display = True):
 
             # display the object in its vertex mode
             if mode == 'vertex':
-            for v,c in zip(_object_.vertex,_object_.vertexColor):
-                x,y,z = v
-                #z += 5        
-                x -= cam.pos[0]
-                y -= cam.pos[1]
-                z += cam.pos[2]
-                
-                f = 200/z
-                x,y = x*f,y*f
-                pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
+                for v,c in zip(_object_.vertex,_object_.vertexColor):
+                    x,y,z = v
+                    #z += 5        
+                    x -= cam.pos[0]
+                    y -= cam.pos[1]
+                    z += cam.pos[2]
+                    
+                    f = 200/z
+                    x,y = x*f,y*f
+                    pygame.draw.circle(screen,c,(cx+int(x),cy+int(y)),2)
             if mode == 'edge':
                 # put the cube on screen edge
                 for edge,c in zip(_object_.edges,_object_.edgeColor):
@@ -667,7 +668,7 @@ def pointer():
 
 #print help(Cube)
 print "\n==================help==================n"
-print "press [a w s d e q]  to control camera motion\n\n"
+print "press [a w s d e q]  [< ^ > v ]to control camera motion\n\n"
 print "press [x y z] to rotate the cube | press [g] scale the cube\n [f] apply force"
 
 
