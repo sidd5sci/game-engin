@@ -251,16 +251,15 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_t]:
         #_selected_object_sequence_
         s = _selected_object_sequence_[-1]
-        
+        # fetch the last selected object as master
+        master  =  fetchObjectById(s)
+        # filling the master joints 
         for o in _object_sequence_:
-            if o[0] == s:
-                master  =  o[1]
-            if o[0] == s:
+            if o[0] != s:
                 # found the object 
                 j = joints(o[0]) # creating a new joint
-                o[1].joints.append(j) # appened a new joint in the list of joints
-            else :
-                print "Please select an object"
+                master.joints.append(j) # appened a new joint in the list of joints
+            
     if mouse_buttons[0]:
         # getting the current position of the mouse 
         p = pygame.mouse.get_pos()
@@ -443,6 +442,10 @@ def deselectAllObjects():
     # empty the selected sequence of the object  
     for s in _selected_object_sequence_:
         _selected_object_sequence_.remove(s)
+def fetchObjectById(_id_):
+    for o in _object_sequence_:
+        if o[0] == _id_:
+            return o[1]
 def showObject():
     global _object_sequence_
     for o in _object_sequence_:
@@ -578,9 +581,18 @@ def display(mode,_object_,select = False,edit = False,display = True):
                 if select == True:
                     pygame.draw.circle(screen,color.RED,(cx+int(x),cy+int(y)),2)
             # displaying the joints between the objects 
-            for j in _object_.joints:
-                _id_ = j.object_id
+            if len(_object_.joints): 
+                # if object have any joit the code will work
+                for j in _object_.joints:
+                    _id_ = j.object_id
+                    salve = fetchObjectById(_id_)
+                    p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
+                    p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])
+                    
 
+                    print p2,p1           
+                pygame.draw.line(screen,color.GRAY,p1,p2,1)
+        ########################################################################
         else:# if object is not selected 
 
             # display the object in its vertex mode
@@ -672,7 +684,18 @@ def display(mode,_object_,select = False,edit = False,display = True):
                         pygame.draw.polygon(screen,color.YELLOW,face_list[i])
                     else:
                         pygame.draw.polygon(screen,color.RED,face_list[i])
-    
+            # displaying the joints between the objects 
+            if len(_object_.joints): 
+                # if object have any joit the code will work
+                for j in _object_.joints:
+                    _id_ = j.object_id
+                    salve = fetchObjectById(_id_)
+                    p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
+                    p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])
+                    
+
+                    print p2,p1           
+                pygame.draw.line(screen,color.GRAY,p1,p2,1)
 def updateScreenScales():
     global pixelFactor,scalex,scaley,cam
     pixelFactor = 200/cam.pos[2]

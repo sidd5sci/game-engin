@@ -57,6 +57,8 @@ class Ak47(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -78,6 +80,8 @@ class Women(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -96,6 +100,8 @@ class Man(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -120,6 +126,8 @@ class Arrow(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -138,6 +146,8 @@ class Pointer(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -157,6 +167,8 @@ class Mark(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -178,6 +190,8 @@ class Pointer3d(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -197,6 +211,8 @@ class Teapot(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -216,6 +232,8 @@ class Donought(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -235,6 +253,8 @@ class Sphere(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -254,6 +274,8 @@ class Plane(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -272,6 +294,8 @@ class Circle(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -292,6 +316,8 @@ class Cylinder(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -311,6 +337,8 @@ class Cone(physics):
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
