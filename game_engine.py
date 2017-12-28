@@ -587,10 +587,7 @@ def display(mode,_object_,select = False,edit = False,display = True):
                     _id_ = j.object_id
                     salve = fetchObjectById(_id_)
                     p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
-                    p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])
-                    
-
-                    print p2,p1           
+                    p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])    
                 pygame.draw.line(screen,color.GRAY,p1,p2,1)
         ########################################################################
         else:# if object is not selected 
@@ -691,10 +688,7 @@ def display(mode,_object_,select = False,edit = False,display = True):
                     _id_ = j.object_id
                     salve = fetchObjectById(_id_)
                     p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
-                    p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])
-                    
-
-                    print p2,p1           
+                    p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])           
                 pygame.draw.line(screen,color.GRAY,p1,p2,1)
 def updateScreenScales():
     global pixelFactor,scalex,scaley,cam
