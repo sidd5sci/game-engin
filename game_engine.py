@@ -225,10 +225,22 @@ def _input_(key,mouse_rel,mouse_buttons):
                     print o[1].joints 
                 else:
                     translate3d(o[1],(1,0,0))
-    if key[pygame.K_n]:createNewObject('cube')
-    if key[pygame.K_l]:v = vector((0,1,0),(0,0,0));_selected_object_.applyAcc(9.87,v)# apply gravity
-    if key[pygame.K_o]:v = vector((0,4,0),(0,0,0));_selected_object_.applyForce1((1,1,0),1,v)   
-    if key[pygame.K_u]:v = vector((0,1,1),(0,0,0));_selected_object_.applyAngAcc(0.11,v)# apply gravity
+    if key[pygame.K_n]:createNewObject('cube') # creating the  new object 
+    if key[pygame.K_l]:
+        v = vector((0,1,0),(0,0,0))
+        for o in _object_sequence_:
+            if o[3] == True:
+                o[1].applyAcc(9.87,v)# apply gravity
+    if key[pygame.K_o]:
+        v = vector((0,4,0),(0,0,0))
+        for o in _object_sequence_:
+            if o[3] == True:
+                o[1].applyForce1((1,1,0),1,v) # apply the torque
+    if key[pygame.K_u]:
+        v = vector((0,1,1),(0,0,0))
+        for o in _object_sequence_:
+            if o[3] == True:
+                o[1].applyAngAcc(0.11,v)# apply gravity
     if key[pygame.K_v]:deselectAllObjects()# deselects all the objects 
     if key[pygame.K_k]:gaHolder.append(initGA())
     if key[pygame.K_j]:livePopulation()
@@ -236,7 +248,19 @@ def _input_(key,mouse_rel,mouse_buttons):
         # printing out the data of all the objects
          for o in _object_sequence_:
             print (o[0],' | ',o[2],' | ',o[3])
-    if key[pygame.K_t]:pass
+    if key[pygame.K_t]:
+        #_selected_object_sequence_
+        s = _selected_object_sequence_[-1]
+        
+        for o in _object_sequence_:
+            if o[0] == s:
+                master  =  o[1]
+            if o[0] == s:
+                # found the object 
+                j = joints(o[0]) # creating a new joint
+                o[1].joints.append(j) # appened a new joint in the list of joints
+            else :
+                print "Please select an object"
     if mouse_buttons[0]:
         # getting the current position of the mouse 
         p = pygame.mouse.get_pos()
@@ -412,9 +436,13 @@ def fillObjectSequence(_object_,mode,state=False):
     #  state True-> selected
     _object_sequence_.append([i,_object_,mode,state])
 def deselectAllObjects():
-    global _object_sequence_
+    global _object_sequence_,_selected_object_sequence_
+    # desecting all the object the view
     for o in _object_sequence_:
         o[3] = False
+    # empty the selected sequence of the object  
+    for s in _selected_object_sequence_:
+        _selected_object_sequence_.remove(s)
 def showObject():
     global _object_sequence_
     for o in _object_sequence_:
@@ -549,7 +577,10 @@ def display(mode,_object_,select = False,edit = False,display = True):
                 x,y = x*f,y*f
                 if select == True:
                     pygame.draw.circle(screen,color.RED,(cx+int(x),cy+int(y)),2)
-            
+            # displaying the joints between the objects 
+            for j in _object_.joints:
+                _id_ = j.object_id
+
         else:# if object is not selected 
 
             # display the object in its vertex mode
