@@ -52,9 +52,11 @@ class Cam:
          
         c1,s1 = math.cos(dtheta),math.sin(dtheta)
         c2,s2 = math.cos(-dtheta),math.sin(-dtheta)
-        
+        d = math.sqrt((self.pos[0]**2)+(self.pos[1]**2)+(self.pos[2]**2))
         if key[pygame.K_w]:
                 temp = self.pos[1]
+                #self.pos[1] =  d*c1 - d*s1
+                #self.pos[2] =  temp*s1 + d*c1
                 self.pos[1] =  self.pos[1]*c1 - self.pos[2]*s1
                 self.pos[2] =  temp*s1 + self.pos[2]*c1
         if key[pygame.K_s]:
@@ -809,7 +811,7 @@ cam = Cam((-0,0,-30))
 pixelFactor = 200/cam.pos[2]
 scalex,scaley = -width/pixelFactor,-height/pixelFactor
 # create the default 3d plane and cordinates of the 3d world
-plane = Plane((0,0,0))
+plane = PlaneWire((0,0,0))
 wCenter = Pointer((0,0,0))
 # 3d pointer
 pointer3d = Mark((8,0,0))
@@ -859,7 +861,7 @@ def main():
             showObjectGL()
             coords()
        else:
-            display('edge',plane)
+            display('vertex',plane)
             showObject()
             display('edge',wCenter)
             display('edge',pointer3d)
