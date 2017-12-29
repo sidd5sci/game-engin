@@ -48,7 +48,7 @@ class Cam:
         if key[pygame.K_LEFT]: self.pos[0] -= s
         if key[pygame.K_RIGHT]: self.pos[0] += s 
    
-    def rotateCam(self,dt,key,dtheta): 
+    def rotateCam(self,dt,key,dtheta,radius=1): 
          
         c1,s1 = math.cos(dtheta),math.sin(dtheta)
         c2,s2 = math.cos(-dtheta),math.sin(-dtheta)
@@ -69,10 +69,11 @@ class Cam:
                 temp = self.pos[0]
                 self.pos[0] =  self.pos[0]*c2 - self.pos[2]*s2
                 self.pos[2] =  temp*s2 + self.pos[2]*c2
-        if key[pygame.K_c]:
-                temp = self.pos[0]
-                self.pos[0] =  self.pos[0]*c1 + self.pos[1]*s1
-                self.pos[1] = -temp*s1 + self.pos[1]*c1
+        
+        #if key[pygame.K_c]:
+        #        temp = self.pos[0]
+        #        self.pos[0] =  self.pos[0]*c1 + self.pos[1]*s1
+        #        self.pos[1] = -temp*s1 + self.pos[1]*c1
 
     def updateGL(self,mouse_buttons,mouse_rel,key):
         if mouse_buttons[0]:
@@ -588,7 +589,7 @@ def display(mode,_object_,select = False,edit = False,display = True):
                     salve = fetchObjectById(_id_)
                     p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
                     p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])    
-                pygame.draw.line(screen,color.GRAY,p1,p2,1)
+                    pygame.draw.line(screen,color.GRAY,p1,p2,1)
         ########################################################################
         else:# if object is not selected 
 
@@ -689,7 +690,7 @@ def display(mode,_object_,select = False,edit = False,display = True):
                     salve = fetchObjectById(_id_)
                     p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
                     p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])           
-                pygame.draw.line(screen,color.GRAY,p1,p2,1)
+                    pygame.draw.line(screen,color.GRAY,p1,p2,1)
 def updateScreenScales():
     global pixelFactor,scalex,scaley,cam
     pixelFactor = 200/cam.pos[2]
@@ -892,7 +893,7 @@ def main():
             cam.updateGL(mouse_buttons,mouse_rel,key)
        else:
             cam.update(dt,key)
-            cam.rotateCam(dt,key,dtheta)
+            cam.rotateCam(dt,key,dtheta,calDistance((0,0,0),cam.pos))
             updateScreenScales()
        
        

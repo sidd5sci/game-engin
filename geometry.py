@@ -262,6 +262,30 @@ class Sphere(physics):
                 self.vertex[i][1] += pos[1]
                 self.vertex[i][2] += pos[2]
 
+class PlaneWire(physics):
+    def __init__(self,pos):
+        super(PlaneWire,self).__init__()
+        self.vertex = [-10,0,10],[-9,0,10],[-8,0,10],
+        [-7,0,10],[-6,0,10],[-5,0,10],[-4,0,10],[-3,0,10],
+        [-10,0,10],[-9,0,10],[-8,0,10],[-7,0,10],[-6,0,10],
+        [-5,0,10],[-4,0,10],[-3,0,10]
+        self.edges = [0,1],[1,2],[2,3],[3,0]
+        self.faces = [0,1,2,3]
+        self.vertexColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.edgeColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.faceColor = [[200,200,200]]
+        self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
+        self.centerOfBody = vertex(0,0,0)
+        self.centerOfGravity = vertex(0,0,0)
+        self.joints = list() # store the id and joint type data 
+        
+        # translating the object from origin to given position
+        if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
+            for i in range(0,len(self.vertex)):
+                self.vertex[i][0] += pos[0]
+                self.vertex[i][1] += pos[1]
+                self.vertex[i][2] += pos[2]
+
 class Plane(physics):
     def __init__(self,pos):
         super(Plane,self).__init__()
@@ -375,6 +399,8 @@ if __name__ == '__main__':
     print c.centerOfBody.get(),c.centerOfGravity.get(),c.pos.get()
     translate3d(c,(0,0,0))
     print c
+    p = PlaneWire((0,0,0))
+    print p
     translate3d(c,(10,2,5))
     print c.pos.get()
     

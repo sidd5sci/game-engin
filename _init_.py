@@ -13,3 +13,7 @@ Copyright {2017} {siddhartha singh | sidd5sci@gmail.com}
    See the License for the specific language governing permissions and
    limitations under the License.
 '''
+
+
+__version__ = '0.1'
+__author__ = 'Siddhartha singh'
