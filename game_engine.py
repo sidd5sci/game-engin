@@ -53,6 +53,7 @@ class Cam:
         c1,s1 = math.cos(dtheta),math.sin(dtheta)
         c2,s2 = math.cos(-dtheta),math.sin(-dtheta)
         d = math.sqrt((self.pos[0]**2)+(self.pos[1]**2)+(self.pos[2]**2))
+        
         if key[pygame.K_w]:
                 temp = self.pos[1]
                 #self.pos[1] =  d*c1 - d*s1
@@ -194,7 +195,65 @@ def worldToScreen(cords):
     input function
 ==========================================
 '''
-
+def pushKey():
+    pass
+def fetchKey():
+    global _key_sequence_
+    # _key_sequence_ [_id_,key,hit_time]
+    for k in _key_sequence_:
+        if k[1] == pygame.K_a:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_b:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_c:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_d:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_e:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_f:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_g:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_h:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_i:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_j:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_k:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_l:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_m:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_n:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_o:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_p:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_q:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_r:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_s:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_t:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_u:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_v:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_w:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_x:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_y:
+            _key_sequence_.remove(k)
+        if k[1] == pygame.K_z:
+            _key_sequence_.remove(k)
+        
 def _input_(key,mouse_rel,mouse_buttons):
     global cube1,pointer3d,point,_object_sequence_
     if key[pygame.K_x]:
@@ -829,10 +888,12 @@ _selected_object_sequence_ = list()
 gaHolder = []
 # selecting the first object 
 _selected_object_sequence_.append(_object_sequence_[0][0])
+# key input queue 
+_key_sequence_ = list()
 
 
 print 'Pointer ',pointer3d.pos.get(),'scales',scalex,scaley
-
+print 'wire\n',plane.vertex
 
 
 
