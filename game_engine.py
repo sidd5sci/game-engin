@@ -195,63 +195,77 @@ def worldToScreen(cords):
     input function
 ==========================================
 '''
-def pushKey():
-    pass
 def fetchKey():
+    global _key_sequence
+    for k in _key_sequence_:
+        _key_sequence_.remove(k)
+        break;return k
+        
+def pushKey():
+    global _key_sequence_
+    if pygame.key.get_pressed():
+        _id_ = -1
+        for k in _key_sequence_:
+            _id_ = k[0][0]
+            break
+        _id_ = _id_ + 1
+        key = pygame.key.get_pressed()
+        _key_sequence_.append([_id_,key])
+def keyOpration():
     global _key_sequence_
     # _key_sequence_ [_id_,key,hit_time]
-    for k in _key_sequence_:
+    
         if k[1] == pygame.K_a:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_b:
+        elif k[1] == pygame.K_b:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_c:
+        elif k[1] == pygame.K_c:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_d:
+        elif k[1] == pygame.K_d:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_e:
+        elif k[1] == pygame.K_e:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_f:
+        elif k[1] == pygame.K_f:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_g:
+        elif k[1] == pygame.K_g:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_h:
+        elif k[1] == pygame.K_h:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_i:
+        elif k[1] == pygame.K_i:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_j:
+        elif k[1] == pygame.K_j:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_k:
+        elif k[1] == pygame.K_k:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_l:
+        elif k[1] == pygame.K_l:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_m:
+        elif k[1] == pygame.K_m:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_n:
+        elif k[1] == pygame.K_n:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_o:
+        elif k[1] == pygame.K_o:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_p:
+        elif k[1] == pygame.K_p:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_q:
+        elif k[1] == pygame.K_q:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_r:
+        elif k[1] == pygame.K_r:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_s:
+        elif k[1] == pygame.K_s:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_t:
+        elif k[1] == pygame.K_t:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_u:
+        elif k[1] == pygame.K_u:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_v:
+        elif k[1] == pygame.K_v:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_w:
+        elif k[1] == pygame.K_w:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_x:
+        elif k[1] == pygame.K_x:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_y:
+        elif k[1] == pygame.K_y:
             _key_sequence_.remove(k)
-        if k[1] == pygame.K_z:
+        elif k[1] == pygame.K_z:
             _key_sequence_.remove(k)
         
 def _input_(key,mouse_rel,mouse_buttons):
@@ -445,7 +459,6 @@ def displayGL(mode,_object_):
                 glColor3f(0.5,0,0.40)
                 glVertex3fv(vertex)
         glEnd()
-
 def createNewObject(objectType):
     if objectType == 'arrow':
         newObject = Arrow(pointer3d.pos.get())
@@ -489,7 +502,6 @@ def createNewObject(objectType):
     if objectType == 'ak47':
         newObject = Ak47(pointer3d.pos.get())
         fillObjectSequence(newObject,'face',True)
-        
 def fillObjectSequence(_object_,mode,state=False):
     # fills the object in a list as [id , object , display mode ,select state]
     global _object_sequence_
@@ -516,7 +528,6 @@ def showObjectGL():
     global _object_sequence_
     for o in _object_sequence_:
         displayGL(o[2],o[1])
-
 def loadObject():
     global _object_sequence_depth_buffer_
     for o in _object_sequence_depth_buffer_:
@@ -570,8 +581,6 @@ def livePopulation():
             ga.crossOverEngine()
             ga.mutation()
             ga.regenration()
-
-
 
 
 
