@@ -214,58 +214,113 @@ def pushKey():
 def keyOpration():
     global _key_sequence_
     # _key_sequence_ [_id_,key,hit_time]
-    
-        if k[1] == pygame.K_a:
+    k = fetchKey()
+    if k[1] == pygame.K_a:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_b:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_c:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_d:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_e:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_f:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_g:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_h:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_i:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_j:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_k:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_l:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_m:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_n:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_o:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_p:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_q:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_r:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_s:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_t:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_u:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_v:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_w:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_x:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_y:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_z:
+        _key_sequence_.remove(k)
+    elif k[1] == pygame.K_RCTRL or k[1] == pygame.K_LCTRL :
+        _key_sequence_.remove(k)
+        k2 = fetchKey()
+        if k2[1] == pygame.K_a:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_b:
+        elif k2[1] == pygame.K_b:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_c:
+        elif k2[1] == pygame.K_c:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_d:
+        elif k2[1] == pygame.K_d:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_e:
+        elif k2[1] == pygame.K_e:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_f:
+        elif k2[1] == pygame.K_f:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_g:
+        elif k2[1] == pygame.K_g:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_h:
+        elif k2[1] == pygame.K_h:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_i:
+        elif k2[1] == pygame.K_i:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_j:
+        elif k2[1] == pygame.K_j:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_k:
+        elif k2[1] == pygame.K_k:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_l:
+        elif k2[1] == pygame.K_l:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_m:
+        elif k2[1] == pygame.K_m:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_n:
+        elif k2[1] == pygame.K_n:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_o:
+        elif k2[1] == pygame.K_o:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_p:
+        elif k2[1] == pygame.K_p:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_q:
+        elif k2[1] == pygame.K_q:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_r:
+        elif k2[1] == pygame.K_r:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_s:
+        elif k2[1] == pygame.K_s:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_t:
+        elif k2[1] == pygame.K_t:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_u:
+        elif k2[1] == pygame.K_u:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_v:
+        elif k2[1] == pygame.K_v:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_w:
+        elif k2[1] == pygame.K_w:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_x:
+        elif k2[1] == pygame.K_x:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_y:
+        elif k2[1] == pygame.K_y:
             _key_sequence_.remove(k)
-        elif k[1] == pygame.K_z:
+        elif k2[1] == pygame.K_z:
             _key_sequence_.remove(k)
         
 def _input_(key,mouse_rel,mouse_buttons):
