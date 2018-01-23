@@ -348,7 +348,7 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_g]:
         for o in _object_sequence_:
             if o[3] == True:
-                scale3d(o[1],(0.5,0.5,0.5))
+                scale3d(o[1],(0.1,0.1,0.1))
     if key[pygame.K_p]:
         for o in _object_sequence_:
             if o[3] == True:
@@ -388,8 +388,9 @@ def _input_(key,mouse_rel,mouse_buttons):
         for o in _object_sequence_:
             if o[0] != s:
                 # found the object 
-                j = joints(o[0]) # creating a new joint
-                master.joints.append(j) # appened a new joint in the list of joints
+                if o[3] == True: # if the object is selected 
+                    j = joints(o[0]) # creating a new joint
+                    master.joints.append(j) # appened a new joint in the list of joints
             
     if mouse_buttons[0]:
         # getting the current position of the mouse 
@@ -1014,7 +1015,7 @@ def main():
            #translate3d_t(pointer3d,(1,0,0))
            #print 'linear:',cube1.pos.get(),cube1.velocity.get(),cube1.acc.get()
            #print 'rotate:',cube1.theta.get(),cube1.omega.get(),cube1.angAcc.get()
-           print _selected_object_sequence_[0][1]
+           print _selected_object_sequence_[0]
        # update the camera
        if Gmode == 'openGL':
             cam.updateGL(mouse_buttons,mouse_rel,key)
