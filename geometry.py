@@ -28,10 +28,12 @@ from transformations import *
 ==========================================
 '''
 class joints:
-    def __init__(self,_id_,_type_= 'rigid',conn = 0):
+    def __init__(self,_id_,_type_= 'rigid',conn = 0,length = 1,angle = 0):
         self.type = _type_ # 1->rigid | 2->physical | 3-> logical
         self.connection = conn # 0-> forword | 1-> backword
         self.object_id = _id_ # defaul is not set
+        self.length = length
+        self.angle = angle 
     def rotate(self):
         pass
     def move(self):

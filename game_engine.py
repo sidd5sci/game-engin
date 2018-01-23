@@ -340,8 +340,12 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_f]:
         for o in _object_sequence_:
             if o[3] == True:
-                if len(o[1].joints):
+                if len(o[1].joints): # checking if object is master 
                     print len(o[1].joints)
+                    translate3d_t(o[1],(1,0,0)) # translate the master
+                    for j in o[1].joints: #fetching the salaves by id
+                        s = fetchObjectById(j.object_id)
+                        translate3d_t(s,(1,0,0))
                 else:
                     translate3d_t(o[1],(1,0,0))
     if key[pygame.K_h]:
