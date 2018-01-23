@@ -341,7 +341,7 @@ def _input_(key,mouse_rel,mouse_buttons):
         for o in _object_sequence_:
             if o[3] == True:
                 if len(o[1].joints): # checking if object is master 
-                    print len(o[1].joints)
+                    # print len(o[1].joints)
                     translate3d_t(o[1],(1,0,0)) # translate the master
                     for j in o[1].joints: #fetching the salaves by id
                         s = fetchObjectById(j.object_id)
@@ -351,7 +351,14 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_h]:
         for o in _object_sequence_:
             if o[3] == True:
-                translate3d_t(o[1],(0,1,0))
+                if len(o[1].joints): # checking if object is master 
+                    # print len(o[1].joints)
+                    translate3d_t(o[1],(1,0,0)) # translate the master
+                    for j in o[1].joints: #fetching the salaves by id
+                        s = fetchObjectById(j.object_id)
+                        translate3d_t(s,(1,0,0))
+                else:
+                    translate3d_t(o[1],(0,1,0))
     if key[pygame.K_g]:
         for o in _object_sequence_:
             if o[3] == True:
@@ -396,7 +403,8 @@ def _input_(key,mouse_rel,mouse_buttons):
             if o[0] != s:
                 # found the object 
                 if o[3] == True: # if the object is selected 
-                    j = joints(o[0]) # creating a new joint
+                    l = calDistance([master.pos.x,master.pos.y,master.pos.z],[o[1].pos.x,o[1].pos.y,o[1].pos.z])
+                    j = joints(o[0],'rigid',0,l) # creating a new joint
                     master.joints.append(j) # appened a new joint in the list of joints
             
     if mouse_buttons[0]:
@@ -719,8 +727,9 @@ def display(mode,_object_,select = False,edit = False,display = True):
                 # if object have any joit the code will work
                 for j in _object_.joints:
                     _id_ = j.object_id
-                    salve = fetchObjectById(_id_)
-                    p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
+                    slave = fetchObjectById(_id_)
+                    
+                    p2 = worldToScreen([slave.pos.x,slave.pos.y,slave.pos.z])
                     p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])    
                     pygame.draw.line(screen,color.GRAY,p1,p2,1)
         ########################################################################

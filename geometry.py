@@ -34,6 +34,13 @@ class joints:
         self.object_id = _id_ # defaul is not set
         self.length = length
         self.angle = angle 
+    def calData(self,):
+        for j in _object_.joints:
+            _id_ = j.object_id
+            slave = fetchObjectById(_id_)
+            
+            p2 = worldToScreen([slave.pos.x,slave.pos.y,slave.pos.z])
+            p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])  
     def rotate(self):
         pass
     def move(self):
