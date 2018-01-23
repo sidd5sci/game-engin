@@ -340,7 +340,10 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_f]:
         for o in _object_sequence_:
             if o[3] == True:
-                translate3d_t(o[1],(1,0,0))
+                if len(o[1].joints):
+                    print len(o[1].joints)
+                else:
+                    translate3d_t(o[1],(1,0,0))
     if key[pygame.K_h]:
         for o in _object_sequence_:
             if o[3] == True:
