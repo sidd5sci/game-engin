@@ -185,8 +185,10 @@ def worldToScreen(cords):
     global pixelFactor,cx,cy
     x,y,z = cords[0],cords[1],cords[2]
     
-    x,y = x-cam.pos[0],y-cam.pos[1]
-    x,y = x*pixelFactor,y*pixelFactor
+    x,y,z = x-cam.pos[0],y-cam.pos[1],z-cam.pos[2]
+    #pixelFactor = (pixelFactor*cam.pos[2])/z
+    f = 200/z
+    x,y = x*f,y*f
     x,y = cx+int(x),cy+int(y)
     #x,y = scalex/2+x,scaley/2+y
     return [x,y]
@@ -736,8 +738,9 @@ def display(mode,_object_,select = False,edit = False,display = True):
            
             pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[0]),1)
             pygame.draw.line(screen,color.GREEN,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[1]),1)
-            pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[2]),1)
-
+            pygame.draw.line(screen,color.BLUE,worldToScreen(_object_.axis.center.getAsList()),worldToScreen([0,10,40]),1)
+            pygame.draw.line(screen,color.BLUE,worldToScreen([0,0,0]),worldToScreen([1,1,10]),1)
+            print worldToScreen([0,0,50])
         ########################################################################
         else:# if object is not selected 
 
