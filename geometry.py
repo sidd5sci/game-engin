@@ -58,13 +58,14 @@ class axis():
         self.size = size
         # by default every axis always align to (0,0,0) to the world cordinates
         self.ends = [1,0,0],[0,1,0],[0,0,1]
+        #self.rotate(self.angles)
         self.calEnds()
-        self.rotate(self.angles)
+        print 'end : ',self.ends , self.center.getAsList()
     def calEnds(self):
         for i in range(0,3):
-            self.ends[i][0] = self.center.x + self.size
-            self.ends[i][1] = self.center.y + self.size
-            self.ends[i][2] = self.center.z + self.size
+            self.ends[i][0] = self.center.x + self.ends[i][0]*self.size 
+            self.ends[i][1] = self.center.y + self.ends[i][1]*self.size 
+            self.ends[i][2] = self.center.z + self.ends[i][2]*self.size 
     def rotate(self,rot):
         if len(rot):
             # axis is rotated 
@@ -322,7 +323,7 @@ class PlaneWire(physics):
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
         self.joints = list() # store the id and joint type data 
-        self.axis = axis(self.centerOfBody,[0,0,0],10) # axis of the object
+        self.axis = axis(self.centerOfBody,[0,0,0],5) # axis of the object
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -343,7 +344,7 @@ class Plane(physics):
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
         self.joints = list() # store the id and joint type data 
-        self.axis = axis(self.centerOfBody,[0,0,0],10) # axis of the object
+        self.axis = axis(self.centerOfBody,[0,0,0],5) # axis of the object
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -363,7 +364,7 @@ class Circle(physics):
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
         self.joints = list() # store the id and joint type data 
-        self.axis = axis(self.centerOfBody,[0,0,0],10) # axis of the object
+        self.axis = axis(self.centerOfBody,[0,0,0],5) # axis of the object
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -385,7 +386,7 @@ class Cylinder(physics):
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
         self.joints = list() # store the id and joint type data 
-        self.axis = axis(self.centerOfBody,[0,0,0],10) # axis of the object
+        self.axis = axis(self.centerOfBody,[0,0,0],5) # axis of the object
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -406,7 +407,7 @@ class Cone(physics):
         self.centerOfBody = vertex(0,0,0)
         self.centerOfGravity = vertex(0,0,0)
         self.joints = list() # store the id and joint type data 
-        self.axis = axis(self.centerOfBody,[0,0,0],10) # axis of the object
+        self.axis = axis(self.centerOfBody,[0,0,0],5) # axis of the object
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):
@@ -427,7 +428,7 @@ class Cube(physics):
         self.centerOfBody = vertex(pos[0],pos[1],pos[2])
         self.centerOfGravity = vertex(pos[0],pos[1],pos[2])
         self.joints = list() # store the id and joint type data 
-        self.axis = axis(self.centerOfBody,[0,0,0],10) # axis of the object 
+        self.axis = axis(self.centerOfBody,[0,0,0],5) # axis of the object 
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):

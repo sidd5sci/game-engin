@@ -370,7 +370,7 @@ def _input_(key,mouse_rel,mouse_buttons):
                     print o[1].joints 
                 else:
                     translate3d(o[1],(1,0,0))
-    if key[pygame.K_n]:createNewObject('circle') # creating the  new object 
+    if key[pygame.K_n]:createNewObject('cube') # creating the  new object 
     if key[pygame.K_l]:
         v = vector((0,1,0),(0,0,0))
         for o in _object_sequence_:
@@ -733,10 +733,10 @@ def display(mode,_object_,select = False,edit = False,display = True):
                     p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])    
                     pygame.draw.line(screen,color.GRAY,p1,p2,1)
             # displaying the axis of the object
-         
-            pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[0]),1)
+           
+            pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.center.x+_object_.axis.ends[0]),1)
             pygame.draw.line(screen,color.GREEN,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[1]),1)
-            pygame.draw.line(screen,color.BLUE,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[2]),1)
+            pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[2]),1)
 
         ########################################################################
         else:# if object is not selected 
@@ -980,7 +980,7 @@ _key_sequence_ = list()
 
 
 print 'Pointer ',pointer3d.pos.get(),'scales',scalex,scaley
-print 'wire\n',plane.vertex
+#print 'wire\n',plane.vertex
 
 
 
