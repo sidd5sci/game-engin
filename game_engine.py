@@ -370,7 +370,7 @@ def _input_(key,mouse_rel,mouse_buttons):
                     print o[1].joints 
                 else:
                     translate3d(o[1],(1,0,0))
-    if key[pygame.K_n]:createNewObject('cube') # creating the  new object 
+    if key[pygame.K_n]:createNewObject('circle') # creating the  new object 
     if key[pygame.K_l]:
         v = vector((0,1,0),(0,0,0))
         for o in _object_sequence_:
@@ -542,7 +542,7 @@ def createNewObject(objectType):
         fillObjectSequence(newObject,'edge',True)
     if objectType == 'circle':
         newObject = Circle(pointer3d.pos.get())
-        fillObjectSequence(newObject,'edge',True)
+        fillObjectSequence(newObject,'vertex',True)
     if objectType == 'pointer':
         newObject = Cube(pointer3d.pos.get())
         fillObjectSequence(newObject,'edge',True)

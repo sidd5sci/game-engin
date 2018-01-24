@@ -110,6 +110,9 @@ class vector(object):
         self.y /= self.mag
         self.z /= self.mag
         self.magCal()
+    def rotate(self,axis,angle=0):
+        if axis == 'x':
+            pass
     def isAlong(self,vect):
         # returns True if both the vectors are along same line
         x,y,z = self.x,self.y,self.z
@@ -163,6 +166,9 @@ class vector(object):
         self.x,self.y,self.z = -self.x,-self.y,-self.z
     def get(self):
         return self.x,self.y,self.z
+
+
+######################################################
 
 def makeVector(mag,_dir_):
     v = vector((0,0,0),(0,0,0))
