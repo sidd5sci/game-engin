@@ -734,7 +734,7 @@ def display(mode,_object_,select = False,edit = False,display = True):
                     pygame.draw.line(screen,color.GRAY,p1,p2,1)
             # displaying the axis of the object
            
-            pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.center.x+_object_.axis.ends[0]),1)
+            pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[0]),1)
             pygame.draw.line(screen,color.GREEN,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[1]),1)
             pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[2]),1)
 
