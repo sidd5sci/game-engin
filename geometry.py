@@ -48,6 +48,43 @@ class joints:
         pass
 '''
 ==========================================
+    axis class
+==========================================
+'''
+class axis():
+    def __init__(self,center,rot,size):
+        self.center = vertex(center[0],center[1],center[2])
+        self.angles = list(rot)
+        self.size = size
+        # by default every axis always align to (0,0,0) to the world cordinates
+        self.ends = []
+        self.calEnds()
+        self.rotate(self.angles)
+    def calEnds(self):
+        self.ends[0] = self.center.x + size
+        self.ends[1] = self.center.y + size
+        self.ends[2] = self.center.z + size
+    def rotate(self,rot):
+        if len(rot):
+            # axis is rotated 
+            if rot[0] != 0:
+                c,s = math.cos(rot[0]),math.sin(rot[0])
+                temp = self.ends[1]
+                self.ends[1] = - self.ends[1]*c - self.ends[2]*s
+                self.ends[2] = - temp*c + self.ends[2]*s
+            if rot[1] != 0:
+                c,s = math.cos(rot[1]),math.sin(rot[1])
+                temp = self.ends[0]
+                self.ends[0] = - self.ends[0]*c - self.ends[2]*s
+                self.ends[2] = - temp*c + self.ends[2]*s
+            if rot[2] != 0:
+                c,s = math.cos(rot[2]),math.sin(rot[2])
+                temp = self.ends[0]
+                self.ends[0] = - self.ends[0]*c - self.ends[1]*s
+                self.ends[1] = - temp*c + self.ends[1]*s
+
+'''
+==========================================
     object classes
 ==========================================
 '''
@@ -319,7 +356,7 @@ class Circle(physics):
         self.edges = [0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,0]
         self.faces = [0,1,2,3,4,5,6,7]
         self.vertexColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
-        self.edgeColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
+        self.edgeColor = [[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100],[100,100,100]]
         self.faceColor = [[200,200,200]]
         self.pos.x,self.pos.y,self.pos.z = pos[0],pos[1],pos[2]
         self.centerOfBody = vertex(0,0,0)
@@ -389,6 +426,7 @@ class Cube(physics):
         self.centerOfBody = vertex(pos[0],pos[1],pos[2])
         self.centerOfGravity = vertex(pos[0],pos[1],pos[2])
         self.joints = list() # store the id and joint type data 
+        self.axis = axis(self.centerOfBody,[0,0,0],10) # axis of the object 
         # translating the object from origin to given position
         if self.pos.x!= 0 or self.pos.y!= 0 or self.pos.z!= 0:
             for i in range(0,len(self.vertex)):

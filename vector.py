@@ -30,6 +30,8 @@ class vertex(object):
         return self.x,self.y,self.z
     def get2d(self):
         return self.x,self.y
+    def getAsList(self):
+        return [self.x,self.y,self.z]
 '''
 ==========================================
     vector class
