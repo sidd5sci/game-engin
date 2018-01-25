@@ -60,7 +60,7 @@ class axis():
         self.ends = [1,0,0],[0,1,0],[0,0,1]
         #self.rotate(self.angles)
         self.calEnds()
-        print 'end : ',self.ends , self.center.getAsList()
+        
     def calEnds(self):
         for i in range(0,3):
             self.ends[i][0] = self.center.x + self.ends[i][0]*self.size 

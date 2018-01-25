@@ -165,7 +165,6 @@ def calDistance(a,b):
     return math.sqrt(((a[0]-b[0])**2)+((a[1]-b[1])**2)+((a[2]-b[2])**2))
 def calDistance2d(a,b):
     return math.sqrt(((a[0]-b[0])**2)+((a[1]-b[1])**2))
-
 # this function finds the geometrical center of the surface
 def calCenter(surface):
     xc,yc,zc = 0.0,0.0,0.0
@@ -185,9 +184,10 @@ def worldToScreen(cords):
     global pixelFactor,cx,cy
     x,y,z = cords[0],cords[1],cords[2]
     
-    x,y,z = x-cam.pos[0],y-cam.pos[1],z-cam.pos[2]
+    x,y,z = x-cam.pos[0],y-cam.pos[1],z+cam.pos[2]
     #pixelFactor = (pixelFactor*cam.pos[2])/z
     f = 200/z
+    #x,y = x*pixelFactor,y*pixelFactor
     x,y = x*f,y*f
     x,y = cx+int(x),cy+int(y)
     #x,y = scalex/2+x,scaley/2+y
@@ -342,25 +342,11 @@ def _input_(key,mouse_rel,mouse_buttons):
     if key[pygame.K_f]:
         for o in _object_sequence_:
             if o[3] == True:
-                if len(o[1].joints): # checking if object is master 
-                    # print len(o[1].joints)
-                    translate3d_t(o[1],(1,0,0)) # translate the master
-                    for j in o[1].joints: #fetching the salaves by id
-                        s = fetchObjectById(j.object_id)
-                        translate3d_t(s,(1,0,0))
-                else:
-                    translate3d_t(o[1],(1,0,0))
+                translateConnectedObjects(o[1],[0,1,0])
     if key[pygame.K_h]:
         for o in _object_sequence_:
             if o[3] == True:
-                if len(o[1].joints): # checking if object is master 
-                    # print len(o[1].joints)
-                    translate3d_t(o[1],(1,0,0)) # translate the master
-                    for j in o[1].joints: #fetching the salaves by id
-                        s = fetchObjectById(j.object_id)
-                        translate3d_t(s,(1,0,0))
-                else:
-                    translate3d_t(o[1],(0,1,0))
+                translateConnectedObjects(o[1],[1,0,0])
     if key[pygame.K_g]:
         for o in _object_sequence_:
             if o[3] == True:
@@ -654,9 +640,16 @@ def livePopulation():
             ga.crossOverEngine()
             ga.mutation()
             ga.regenration()
+#################################################
+#            forword/ inverse kinemetics
+#################################################
 
-
-
+def translateConnectedObjects(_object_,t):
+    translate3d_t(_object_,t) # translating the master
+    if len(_object_.joints): # checking the master have any joints
+        for j in _object_.joints: # fetching the joints 
+            s = fetchObjectById(j.object_id) # fetching the jointed object 
+            translateConnectedObjects(s,t) # recursivly translating the object
 
 ###############################################
 #           Display function
@@ -738,9 +731,9 @@ def display(mode,_object_,select = False,edit = False,display = True):
            
             pygame.draw.line(screen,color.RED,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[0]),1)
             pygame.draw.line(screen,color.GREEN,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[1]),1)
-            pygame.draw.line(screen,color.BLUE,worldToScreen(_object_.axis.center.getAsList()),worldToScreen([0,10,40]),1)
-            pygame.draw.line(screen,color.BLUE,worldToScreen([0,0,0]),worldToScreen([1,1,10]),1)
-            print worldToScreen([0,0,50])
+            pygame.draw.line(screen,color.BLUE,worldToScreen(_object_.axis.center.getAsList()),worldToScreen(_object_.axis.ends[2]),1)
+           
+            
         ########################################################################
         else:# if object is not selected 
 
@@ -847,10 +840,9 @@ def updateScreenScales():
     pixelFactor = 200/cam.pos[2]
     scalex,scaley = -width/pixelFactor,-height/pixelFactor
     
-############################################################
-
-############################################################
-#display section 2d 
+################################################
+#       display section 2d 
+################################################
 def pointer():
     global point
     x,y,z = point.get()
@@ -910,9 +902,9 @@ def init(mode):
         pygame.display.update()
         return screen
 
-#########################################################
-    
-#########################################################
+##################################################
+#           initilising 
+##################################################
 
 
 
