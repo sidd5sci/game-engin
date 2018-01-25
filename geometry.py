@@ -66,6 +66,14 @@ class axis():
             self.ends[i][0] = self.center.x + self.ends[i][0]*self.size 
             self.ends[i][1] = self.center.y + self.ends[i][1]*self.size 
             self.ends[i][2] = self.center.z + self.ends[i][2]*self.size 
+    def translate(self,t):
+        self.center.x += t[0]
+        self.center.y += t[1]
+        self.center.z += t[2]
+        for i in range(0,3):
+            self.ends[i][0] = t[0] + self.ends[i][0]
+            self.ends[i][1] = t[1] + self.ends[i][1]
+            self.ends[i][2] = t[2] + self.ends[i][2] 
     def rotate(self,rot):
         if len(rot):
             # axis is rotated 

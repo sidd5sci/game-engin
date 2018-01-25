@@ -484,40 +484,9 @@ def createPlane():
 def createCircle():
     createNewObject('circle')
 
-'''
-==========================================
-    display function
-==========================================
-'''
-def displayGL(mode,_object_):
-    if mode =='vertex':
-        glBegin(GL_POINTS)
-        for v in _object_.vertex:
-                glColor3f(0.5,0,0.40)
-                glVertex3fv(v)
-        glEnd()
-    if mode =='edge':
-        glBegin(GL_LINES)
-        for edge in _object_.edges:
-            for vertex in edge:
-                glVertex3fv(_object_.vertex[vertex])
-        glEnd()
-    if mode == 'face':
-        
-        # filling the vertex in face list
-        face_list =[]
-        for face in _object_.faces:
-            vertex_list = []
-            for v in face:
-                 vertex_list.append(_object_.vertex[v])
-            face_list.append(vertex_list)
-
-        glBegin(GL_QUADS)    
-        for face in face_list:
-            for vertex in face:
-                glColor3f(0.5,0,0.40)
-                glVertex3fv(vertex)
-        glEnd()
+#################################################
+#            genral function 
+#################################################
 def createNewObject(objectType):
     if objectType == 'arrow':
         newObject = Arrow(pointer3d.pos.get())
@@ -646,14 +615,16 @@ def livePopulation():
 
 def translateConnectedObjects(_object_,t):
     translate3d_t(_object_,t) # translating the master
+    _object_.axis.translate(t) # translating the axis of the obejct
     if len(_object_.joints): # checking the master have any joints
         for j in _object_.joints: # fetching the joints 
             s = fetchObjectById(j.object_id) # fetching the jointed object 
             translateConnectedObjects(s,t) # recursivly translating the object
-
-###############################################
+def rotateConnectedObjects(_obejct,axis,rot):
+    pass
+################################################
 #           Display function
-###############################################
+################################################
 def display(mode,_object_,select = False,edit = False,display = True):
     global color
     if display == True:
@@ -835,6 +806,35 @@ def display(mode,_object_,select = False,edit = False,display = True):
                     p2 = worldToScreen([salve.pos.x,salve.pos.y,salve.pos.z])
                     p1 = worldToScreen([_object_.pos.x,_object_.pos.y,_object_.pos.z])           
                     pygame.draw.line(screen,color.GRAY,p1,p2,1)
+def displayGL(mode,_object_):
+    if mode =='vertex':
+        glBegin(GL_POINTS)
+        for v in _object_.vertex:
+                glColor3f(0.5,0,0.40)
+                glVertex3fv(v)
+        glEnd()
+    if mode =='edge':
+        glBegin(GL_LINES)
+        for edge in _object_.edges:
+            for vertex in edge:
+                glVertex3fv(_object_.vertex[vertex])
+        glEnd()
+    if mode == 'face':
+        
+        # filling the vertex in face list
+        face_list =[]
+        for face in _object_.faces:
+            vertex_list = []
+            for v in face:
+                 vertex_list.append(_object_.vertex[v])
+            face_list.append(vertex_list)
+
+        glBegin(GL_QUADS)    
+        for face in face_list:
+            for vertex in face:
+                glColor3f(0.5,0,0.40)
+                glVertex3fv(vertex)
+        glEnd()
 def updateScreenScales():
     global pixelFactor,scalex,scaley,cam
     pixelFactor = 200/cam.pos[2]
