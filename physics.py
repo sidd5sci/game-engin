@@ -58,10 +58,13 @@ class physics(object):
         self.dt       = 0.15
         self.angAcc   = vector((0,0,0),(0,0,0)) # angular acc
         self.theta    = vector((0,0,0),(0,0,0)) # angular position
+        # electro-magnetic physics
+        self.charge   = 0          # charge
+        self.distr    = 'surface'  # charge distribution type
         # material physics
-        self.IR = 0.0 # rifrective index
+        self.IR       = 0.0 # rifrective index
         self.rigidity = 0.0 # cofficent of the rigidity
-        self.meu = 0.0 # coiffiecent of friction
+        self.meu      = 0.0 # coiffiecent of friction
     def assign_dt(self,dt):
         # this dt controls the change of speed of display of the change in the object position
         self.dt = dt
@@ -138,13 +141,32 @@ class physics(object):
         gForce = vector(0,-1,0)
         gForce.mult(gravitation)
         self.applyForce(gForce)
-    def applyG(self):
-        g = vector((0,0,0),(0,0,0))
-        g.assign((0,0,0),(0,9.8,0))
-        self.acc.add(g)
-        
-        # update the velocity
-        self.updateVelocity()
+    def applyGravitation(self,mass,_pos_):
+        # calculting the distance 
+        r = dist(pos,self.pos)
+        # calculating the magnitude [G*m1*m2/r^2]
+        mag = G*((self.mass*mass)/r**2)
+        # calculating the direction
+        g = vector((self.pos.x,self.pos.y,self.pos.z),(_pos_.x,_pos_.y,_pos_.z))
+        # normalising the vector
+        g.normalize()
+        # multipling the vector 
+        g.mult(mag)
+        # adding the force 
+        self.force.add(g)
+    def applyElectroStatic(self,mass,_pos_):
+        # calculting the distance 
+        r = dist(pos,self.pos)
+        # calculating the magnitude [G*m1*m2/r^2]
+        mag = G*((self.mass*mass)/r**2)
+        # calculating the direction
+        g = vector((self.pos.x,self.pos.y,self.pos.z),(_pos_.x,_pos_.y,_pos_.z))
+        # normalising the vector
+        g.normalize()
+        # multipling the vector 
+        g.mult(mag)
+        # adding the force 
+        self.force.add(g)
     def applyVelocity(self,mag,direction):
         # create a new zero vector
         temp = vector((0,0,0),(0,0,0))
@@ -435,3 +457,6 @@ def isInsideCir(pos1,r1,pos2,r2):
     if dist(pos1,pos2) <= r1+r2:
         return True
 #print IsCollied(surface1,surface2)
+def dist(p1,p2):
+    return  math.sqrt(((p1.x-p2.x)**2)+((p1.y-p2.y)**2)+((p1.z-p2.z)**2))
+    

@@ -72,22 +72,11 @@ def rotate3d(_object_,axis,dtheta,radius = 0):
 def rotate3d_t(_object_,axis,dtheta,radius = 0):
         dx,dy,dz  = _object_.pos.get()
         translate3d_t(_object_,(-dx,-dy,-dz))
-        c,s = math.cos(dtheta),math.sin(dtheta)
-        if axis == 'x':
-            for i in range(0,len(_object_.vertex)):
-                temp = _object_.vertex[i][1]
-                _object_.vertex[i][1] =  _object_.vertex[i][1]*c - _object_.vertex[i][2]*s
-                _object_.vertex[i][2] =  temp*s + _object_.vertex[i][2]*c
-        if axis == 'y':
-            for i in range(0,len(_object_.vertex)):
-                temp = _object_.vertex[i][0]
-                _object_.vertex[i][0] =  _object_.vertex[i][0]*c - _object_.vertex[i][2]*s
-                _object_.vertex[i][2] = temp*s + _object_.vertex[i][2]*c
-        if axis == 'z':
-            for i in range(0,len(_object_.vertex)):
-                temp = _object_.vertex[i][0]
-                _object_.vertex[i][0] =  _object_.vertex[i][0]*c + _object_.vertex[i][1]*s
-                _object_.vertex[i][1] = -temp*s + _object_.vertex[i][1]*c
+        rotate3d(_object_,'x',-dtheta)
+        rotate3d(_object_,'y',-dtheta)
+        rotate3d(_object_,'z',dtheta)
+        rotate3d(_object_,'x',dtheta)
+        rotate3d(_object_,'y',dtheta)
         # translating the object to the its location
         translate3d_t(_object_,(dx,dy,dz))
 def scale3d(_object_,scale):

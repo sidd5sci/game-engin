@@ -621,7 +621,9 @@ def translateConnectedObjects(_object_,t):
             s = fetchObjectById(j.object_id) # fetching the jointed object 
             translateConnectedObjects(s,t) # recursivly translating the object
 def rotateConnectedObjects(_obejct,axis,rot):
-    pass
+    rotate3d(_object_,axis,rot) # rotate the object about the axis
+    _object_.axis.rotate(axis,rot) # rotate the axis too
+
 ################################################
 #           Display function
 ################################################
@@ -905,9 +907,6 @@ def init(mode):
 ##################################################
 #           initilising 
 ##################################################
-
-
-
 
 
 # initilize the pygame
